@@ -18,3 +18,12 @@ class EstadiosTable:
         except sqlite3.OperationalError:
             print("La tabla estadios ya existe")
         conexion.close()
+
+    def create(self, datos):
+        conexion = sqlite3.connect("database/futbol.db")
+        conexion.execute(
+            "insert into Estadios (nombre, pais, ciudad) values (?,?,?)",
+            (datos["nombre"], datos["pais"], datos["ciudad"]),
+        )
+        conexion.commit()
+        conexion.close()

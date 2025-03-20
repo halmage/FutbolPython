@@ -14,6 +14,7 @@ class JugadoresTable:
                                     apellido text not null,                                     
                                     pais text not null,
                                     ciudad text not null,
+                                    equipo_id integer not null,
                                     FOREIGN KEY (equipo_id) 
                                     REFERENCES Equipos (id) 
                                 )"""

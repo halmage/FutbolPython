@@ -13,8 +13,9 @@ class EquiposTable:
                                     nombre text not null, 
                                     pais text not null,
                                     ciudad text not null,
+                                    estadio_id integer not null,
                                     FOREIGN KEY (estadio_id) 
-                                    REFERENCES Estadios (id)
+                                    REFERENCES Estadios (id)  
                                 )"""
             )
         except sqlite3.OperationalError:
