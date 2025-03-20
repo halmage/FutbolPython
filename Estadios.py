@@ -32,7 +32,12 @@ class Estadios:
             self.opcion = input("Ingrese una opcion: ")
 
     def create(self):
-        Otros.cargando(self)
+        anuncio = """
+        ******************************
+        |INGRESO DE DATOS DEL ESTADIO|
+        ******************************
+        """
+        print(anuncio)
         # creacion de estadio
         # Ingreso de nombre
         nombre = input("Ingrese el nombre del estadio: ").lower()
@@ -89,6 +94,10 @@ class Estadios:
             match self.opcion:
                 case "1":
                     # crear estadio
+                    Otros.cargando(self)
+                    system("clear")
                     Estadios.create(self)
                 case "5":
+                    Otros.cargando(self)
+                    system("clear")
                     break

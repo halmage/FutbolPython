@@ -27,3 +27,12 @@ class EstadiosTable:
         )
         conexion.commit()
         conexion.close()
+
+    def all(self):
+        # Listar todos los estadios
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        cursor.execute("select * from Estadios")
+        estadios = cursor.fetchall()
+        conexion.close()
+        return estadios

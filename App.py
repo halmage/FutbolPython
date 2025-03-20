@@ -66,6 +66,8 @@ class App:
                     App.creacionDeLaBaseDeDatos(self)
                     continue
                 case "1":
+                    Otros.cargando(self)
+                    system("clear")
                     self.Estadios.main()
                     continue
                 case "2":
