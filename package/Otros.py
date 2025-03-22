@@ -26,7 +26,7 @@ class Otros:
             and respuesta != "N"
         ):
             print("ERROR: la variable respuesta tiene que ser (y|Y) o (n|N)")
-            respuesta = input("Quieres seguir eliminando (y/n): ")
+            respuesta = input("Quieres seguir realizando operaciones (y/n): ")
 
         if respuesta == "y" or respuesta == "Y":
             Otros.cargando(self)

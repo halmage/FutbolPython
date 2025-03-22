@@ -22,23 +22,24 @@ class Estadios:
         """
         print(anuncio)
         print("1. Crear estadio")
-        print("2. Listar estadios")
-        print("3. Actualizar estadio")
-        print("4. Eliminar estadio")
-        print("5. Salir")
+        print("2. buscar estadio")
+        print("3. Listar estadios")
+        print("4. Actualizar estadio")
+        print("5. Eliminar estadio")
+        print("6. Salir")
         self.opcion = input("Elija una opcion: ")
         while self.opcion.isdigit() == False:
             print("ERROR: la variable opcion tiene que ser numerico")
             self.opcion = input("Ingrese una opcion: ")
 
     def create(self):
+        # creacion de estadio
         anuncio = """
         ******************************
         |INGRESO DE DATOS DEL ESTADIO|
         ******************************
         """
         print(anuncio)
-        # creacion de estadio
         # Ingreso de nombre
         nombre = input("Ingrese el nombre del estadio: ").lower()
         while nombre.isalpha() == False:
@@ -62,6 +63,26 @@ class Estadios:
         self.estadios_table.create(datos)
         print("Estadio creado correctamente")
         Otros.continuar(self)
+
+    def find(self):
+        # buscar estadio
+        anuncio = """
+        ******************************
+        |BUSCAR DATOS DEL ESTADIO|
+        ******************************
+        """
+        while True:
+            print(anuncio)
+            nombre = input("Ingrese el nombre del estadio: ").lower()
+            estadio = self.estadios_table.find(nombre)
+            if estadio:
+                print(f"Nombre: {estadio[1]}")
+                print(f"Pais: {estadio[2]}")
+                print(f"Ciudad: {estadio[3]}")
+            else:
+                print("Estadio no encontrado")
+            if Otros.seguir(self) == False:
+                break
 
     def all(self):
         # listar estadios
@@ -108,11 +129,16 @@ class Estadios:
                     system("clear")
                     Estadios.create(self)
                 case "2":
+                    # buscar estadio
+                    Otros.cargando(self)
+                    system("clear")
+                    Estadios.find(self)
+                case "3":
                     # crear estadio
                     Otros.cargando(self)
                     system("clear")
                     Estadios.all(self)
-                case "5":
+                case "6":
                     Otros.cargando(self)
                     system("clear")
                     break

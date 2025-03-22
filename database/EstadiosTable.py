@@ -28,6 +28,15 @@ class EstadiosTable:
         conexion.commit()
         conexion.close()
 
+    def find(self, nombre):
+        # Buscar un estadio
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        cursor.execute("select * from Estadios where nombre = ?", (nombre,))
+        estadio = cursor.fetchone()
+        conexion.close()
+        return estadio
+
     def all(self):
         # Listar todos los estadios
         conexion = sqlite3.connect("database/futbol.db")
