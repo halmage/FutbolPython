@@ -63,10 +63,20 @@ class Estadios:
         print("Estadio creado correctamente")
         Otros.continuar(self)
 
-    def listarEstadios(self):
-        Otros.cargando(self)
+    def all(self):
         # listar estadios
-        self.estadios_table.listEstadios()
+        anuncio = """
+        ******************************************
+        |LISTADO DE TODOS LOS ESTADIOS INGRESADOS|
+        ******************************************
+        """
+        print(anuncio)
+        data = self.estadios_table.all()
+        for i in range(len(data)):
+            print(f"Nombre: {data[i][1]}")
+            print(f"Pais: {data[i][2]}")
+            print(f"Ciudad: {data[i][3]}")
+            print("**************************")
         Otros.continuar(self)
 
     def actualizarEstadio(self):
@@ -97,6 +107,11 @@ class Estadios:
                     Otros.cargando(self)
                     system("clear")
                     Estadios.create(self)
+                case "2":
+                    # crear estadio
+                    Otros.cargando(self)
+                    system("clear")
+                    Estadios.all(self)
                 case "5":
                     Otros.cargando(self)
                     system("clear")
