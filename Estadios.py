@@ -100,16 +100,94 @@ class Estadios:
             print("**************************")
         Otros.continuar(self)
 
-    def actualizarEstadio(self):
-        Otros.cargando(self)
+    def opcionUpdate(self, nombre):
+        # opcion de actualizar
+        nombre = nombre.upper()
+        anuncio = f"""
+        ***************************************
+        |ACTUALIZAR DATOS DEL ESTADIO {nombre}|
+        ***************************************
+        """
+        while True:
+            print(anuncio)
+            print("1. Nombre")
+            print("2. Pais")
+            print("3. Ciudad")
+            opcion = input("Elija una opcion: ")
+            while opcion.isdigit() == False:
+                print("ERROR: la variable opcion tiene que ser numerico")
+                opcion = input("Ingrese una opcion: ")
+            if opcion < "1" or opcion > "3":
+                # Mensaje de error por que la opcion no esta en el rango
+                print("ERROR: la variable opcion tiene que ser entre 1 y 3")
+                Otros.continuar(self)
+                continue
+            else:
+                return opcion
+
+    def update(self):
         # actualizar estadio
-        id = input("Ingrese el id del estadio: ")
-        nombre = input("Ingrese el nombre del estadio: ")
-        capacidad = input("Ingrese la capacidad del estadio: ")
-        ciudad = input("Ingrese la ciudad del estadio: ")
-        self.estadios_table.updateEstadio(id, nombre, capacidad, ciudad)
-        print("Estadio actualizado correctamente")
-        Otros.continuar(self)
+        anuncio = """
+        ******************************
+        |ACTUALIZAR DATOS DEL ESTADIO|
+        ******************************
+        """
+        seguir = True
+        while seguir:
+            print(anuncio)
+            nombre = input("Ingrese el nombre del estadio: ")
+            estadio = self.estadios_table.find(nombre)
+            if estadio:
+                print(f"Nombre: {estadio[1]}")
+                print(f"Pais: {estadio[2]}")
+                print(f"Ciudad: {estadio[3]}")
+            else:
+                print("Estadio no encontrado")
+                seguir = Otros.seguir(self)
+                if seguir:
+                    continue
+                else:
+                    break
+            seguir = Otros.seguir(self)
+            if seguir:
+                opcion = Estadios.opcionUpdate(self, nombre)
+                match opcion:
+                    case "1":
+                        # actualizar nombre
+                        dato = input("Ingrese nuevo nombre del estadio: ").lower()
+                        while dato.isalpha() == False:
+                            print("ERROR: la variable nombre tiene que ser caracter")
+                            dato = input("Ingrese nuevo nombre del estadio: ").lower()
+                        self.estadios_table.update(dato, nombre, opcion)
+                        print("Datos actualizado correctamente")
+                    case "2":
+                        # actualizar pais
+                        dato = input(
+                            "Ingrese nuevo pais donde recide estadio: "
+                        ).lower()
+                        while dato.isalpha() == False:
+                            print("ERROR: la variable pais tiene que ser caracter")
+                            dato = input(
+                                "Ingrese nuevo pais donde recide estadio: "
+                            ).lower()
+                        self.estadios_table.update(dato, nombre, opcion)
+                        print("Datos actualizado correctamente")
+                    case "3":
+                        # actualizar ciudad
+                        dato = input(
+                            "Ingrese la nueva ciudad donde recide estadio: "
+                        ).lower()
+                        while dato.isalpha() == False:
+                            print("ERROR: la variable ciudad tiene que ser caracter")
+                            dato = input(
+                                "Ingrese la nueva ciudad donde recide estadio: "
+                            ).lower()
+                        self.estadios_table.update(dato, nombre, opcion)
+                        print("Datos actualizado correctamente")
+
+            else:
+                break
+            seguir = Otros.seguir(self)
 
     def eliminarEstadio(self):
         Otros.cargando(self)
@@ -138,6 +216,11 @@ class Estadios:
                     Otros.cargando(self)
                     system("clear")
                     Estadios.all(self)
+                case "4":
+                    # crear estadio
+                    Otros.cargando(self)
+                    system("clear")
+                    Estadios.update(self)
                 case "6":
                     Otros.cargando(self)
                     system("clear")
