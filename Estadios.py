@@ -189,13 +189,35 @@ class Estadios:
                 break
             seguir = Otros.seguir(self)
 
-    def eliminarEstadio(self):
-        Otros.cargando(self)
-        # eliminar estadio
-        id = input("Ingrese el id del estadio: ")
-        self.estadios_table.deleteEstadio(id)
-        print("Estadio eliminado correctamente")
-        Otros.continuar(self)
+    def delete(self):
+        anuncio = """
+        ****************************
+        |ELIMINAR DATOS DEL ESTADIO|
+        ****************************
+        """
+        seguir = True
+        while seguir:
+            print(anuncio)
+            nombre = input("Ingrese el nombre del estadio: ")
+            estadio = self.estadios_table.find(nombre)
+            if estadio:
+                print(f"Nombre: {estadio[1]}")
+                print(f"Pais: {estadio[2]}")
+                print(f"Ciudad: {estadio[3]}")
+            else:
+                print("Estadio no encontrado")
+                seguir = Otros.seguir(self)
+                if seguir:
+                    continue
+                else:
+                    break
+            seguir = Otros.seguir(self)
+            if seguir:
+                self.estadios_table.delete(nombre)
+                print("Datos eliminado correctamente")
+            else:
+                break
+            seguir = Otros.seguir(self)
 
     def main(self):
         while True:
@@ -212,15 +234,20 @@ class Estadios:
                     system("clear")
                     Estadios.find(self)
                 case "3":
-                    # crear estadio
+                    # motrar listado estadios
                     Otros.cargando(self)
                     system("clear")
                     Estadios.all(self)
                 case "4":
-                    # crear estadio
+                    # actualizar datos del estadio
                     Otros.cargando(self)
                     system("clear")
                     Estadios.update(self)
+                case "5":
+                    # eliminar datos del estadio
+                    Otros.cargando(self)
+                    system("clear")
+                    Estadios.delete(self)
                 case "6":
                     Otros.cargando(self)
                     system("clear")
