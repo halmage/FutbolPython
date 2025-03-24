@@ -7,8 +7,14 @@
         > Egregando datos
         > Buscar
         > mostrar todo el listado
+        > actualizar
+        > Eliminar
 
 # Listado de modelos que falta por hacer
 
-    * Modulo de estadio
+    * Modulo equipo
+        > Egregando datos
+        > Buscar
+        > mostrar todo el listado
         > actualizar
+        > Eliminar
