@@ -69,3 +69,10 @@ class EstadiosTable:
             )
         conexion.commit()
         conexion.close()
+
+    def delete(self, nombre):
+        # Eliminar un registro de la tabla 'operaciones'
+        conexion = sqlite3.connect("database/futbol.db")
+        conexion.execute("DELETE FROM Estadios WHERE nombre ='{}'".format(nombre))
+        conexion.commit()
+        conexion.close()
