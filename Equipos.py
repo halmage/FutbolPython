@@ -10,7 +10,6 @@ import time
 
 
 class Equipos:
-
     def __init__(self):
         self.equipos_table = EquiposTable.EquiposTable()
 
@@ -21,11 +20,11 @@ class Equipos:
         ****************
         """
         print(anuncio)
-        print("1. Crear estadio")
-        print("2. buscar estadio")
-        print("3. Listar estadios")
-        print("4. Actualizar estadio")
-        print("5. Eliminar estadio")
+        print("1. Crear equipo")
+        print("2. buscar equipo")
+        print("3. Listar equipos")
+        print("4. Actualizar equipo")
+        print("5. Eliminar equipo")
         print("6. Salir")
         self.opcion = input("Elija una opcion: ")
         while self.opcion.isdigit() == False:
@@ -33,66 +32,66 @@ class Equipos:
             self.opcion = input("Ingrese una opcion: ")
 
     def create(self):
-        # creacion de estadio
+        # creacion de equipo
         anuncio = """
-        ******************************
-        |INGRESO DE DATOS DEL ESTADIO|
-        ******************************
+        *****************************
+        |INGRESO DE DATOS DEL EQUIPO|
+        *****************************
         """
         print(anuncio)
         # Ingreso de nombre
-        nombre = input("Ingrese el nombre del estadio: ").lower()
+        nombre = input("Ingrese el nombre del equipo: ").lower()
         while nombre.isalpha() == False:
             print("ERROR: la variable nombre tiene que ser caracter")
-            nombre = input("Ingrese el nombre del estadio: ").lower()
+            nombre = input("Ingrese el nombre del equipo: ").lower()
 
         # Ingreso de pais
-        pais = input("Ingrese pais donde reside estadio: ").lower()
+        pais = input("Ingrese pais donde reside equipo: ").lower()
         while pais.isalpha() == False:
             print("ERROR: la variable pais tiene que ser caracter")
-            pais = input("Ingrese pais donde reside estadio: ").lower()
+            pais = input("Ingrese pais donde reside equipo: ").lower()
 
         # Ingreso de ciudad
-        ciudad = input("Ingrese ciudad donde reside estadio: ").lower()
+        ciudad = input("Ingrese ciudad donde reside equipo: ").lower()
         while ciudad.isalpha() == False:
             print("ERROR: la variable ciudad tiene que ser caracter")
-            ciudad = input("Ingrese ciudad donde reside estadio: ").lower()
+            ciudad = input("Ingrese ciudad donde reside equipo: ").lower()
 
         datos = {"nombre": nombre, "pais": pais, "ciudad": ciudad}
 
-        self.estadios_table.create(datos)
-        print("Estadio creado correctamente")
+        self.equipos_table.create(datos)
+        print("Equipo creado correctamente")
         Otros.continuar(self)
 
     def find(self):
-        # buscar estadio
+        # buscar equipo
         anuncio = """
-        ******************************
-        |BUSCAR DATOS DEL ESTADIO|
-        ******************************
+        *************************
+        |BUSCAR DATOS DEL EQUIPO|
+        *************************
         """
         while True:
             print(anuncio)
-            nombre = input("Ingrese el nombre del estadio: ").lower()
-            estadio = self.estadios_table.find(nombre)
-            if estadio:
-                print(f"Nombre: {estadio[1]}")
-                print(f"Pais: {estadio[2]}")
-                print(f"Ciudad: {estadio[3]}")
+            nombre = input("Ingrese el nombre del equipo: ").lower()
+            equipo = self.equipos_table.find(nombre)
+            if equipo:
+                print(f"Nombre: {equipo[1]}")
+                print(f"Pais: {equipo[2]}")
+                print(f"Ciudad: {equipo[3]}")
             else:
-                print("Estadio no encontrado")
+                print("Equipo no encontrado")
             if Otros.seguir(self) == False:
                 break
 
     def all(self):
         # listar estadios
         anuncio = """
-        ******************************************
-        |LISTADO DE TODOS LOS ESTADIOS INGRESADOS|
-        ******************************************
+        *****************************************
+        |LISTADO DE TODOS LOS EQUIPOS INGRESADOS|
+        *****************************************
         """
         print(anuncio)
-        data = self.estadios_table.all()
+        data = self.equipos_table.all()
         for i in range(len(data)):
             print(f"Nombre: {data[i][1]}")
             print(f"Pais: {data[i][2]}")
@@ -104,9 +103,9 @@ class Equipos:
         # opcion de actualizar
         nombre = nombre.upper()
         anuncio = f"""
-        ***************************************
-        |ACTUALIZAR DATOS DEL ESTADIO {nombre}|
-        ***************************************
+        **************************************
+        |ACTUALIZAR DATOS DEL EQUIPO {nombre}|
+        **************************************
         """
         while True:
             print(anuncio)
@@ -126,23 +125,23 @@ class Equipos:
                 return opcion
 
     def update(self):
-        # actualizar estadio
+        # actualizar equipo
         anuncio = """
         ******************************
-        |ACTUALIZAR DATOS DEL ESTADIO|
+        |ACTUALIZAR DATOS DEL EQUIPO|
         ******************************
         """
         seguir = True
         while seguir:
             print(anuncio)
-            nombre = input("Ingrese el nombre del estadio: ")
-            estadio = self.estadios_table.find(nombre)
-            if estadio:
-                print(f"Nombre: {estadio[1]}")
-                print(f"Pais: {estadio[2]}")
-                print(f"Ciudad: {estadio[3]}")
+            nombre = input("Ingrese el nombre del equipo: ")
+            equipo = self.equipos_table.find(nombre)
+            if equipo:
+                print(f"Nombre: {equipo[1]}")
+                print(f"Pais: {equipo[2]}")
+                print(f"Ciudad: {equipo[3]}")
             else:
-                print("Estadio no encontrado")
+                print("equipo no encontrado")
                 seguir = Otros.seguir(self)
                 if seguir:
                     continue
@@ -150,27 +149,25 @@ class Equipos:
                     break
             seguir = Otros.seguir(self)
             if seguir:
-                opcion = Estadios.opcionUpdate(self, nombre)
+                opcion = Equipos.opcionUpdate(self, nombre)
                 match opcion:
                     case "1":
                         # actualizar nombre
-                        dato = input("Ingrese nuevo nombre del estadio: ").lower()
+                        dato = input("Ingrese nuevo nombre del equipo: ").lower()
                         while dato.isalpha() == False:
                             print("ERROR: la variable nombre tiene que ser caracter")
-                            dato = input("Ingrese nuevo nombre del estadio: ").lower()
-                        self.estadios_table.update(dato, nombre, opcion)
+                            dato = input("Ingrese nuevo nombre del equipo: ").lower()
+                        self.equipos_table.update(dato, nombre, opcion)
                         print("Datos actualizado correctamente")
                     case "2":
                         # actualizar pais
-                        dato = input(
-                            "Ingrese nuevo pais donde recide estadio: "
-                        ).lower()
+                        dato = input("Ingrese nuevo pais donde recide equipo: ").lower()
                         while dato.isalpha() == False:
                             print("ERROR: la variable pais tiene que ser caracter")
                             dato = input(
-                                "Ingrese nuevo pais donde recide estadio: "
+                                "Ingrese nuevo pais donde recide equipo: "
                             ).lower()
-                        self.estadios_table.update(dato, nombre, opcion)
+                        self.equipos_table.update(dato, nombre, opcion)
                         print("Datos actualizado correctamente")
                     case "3":
                         # actualizar ciudad
@@ -182,7 +179,7 @@ class Equipos:
                             dato = input(
                                 "Ingrese la nueva ciudad donde recide estadio: "
                             ).lower()
-                        self.estadios_table.update(dato, nombre, opcion)
+                        self.equipos_table.update(dato, nombre, opcion)
                         print("Datos actualizado correctamente")
 
             else:
@@ -191,15 +188,15 @@ class Equipos:
 
     def delete(self):
         anuncio = """
-        ****************************
-        |ELIMINAR DATOS DEL ESTADIO|
-        ****************************
+        ***************************
+        |ELIMINAR DATOS DEL EQUIPO|
+        ***************************
         """
         seguir = True
         while seguir:
             print(anuncio)
-            nombre = input("Ingrese el nombre del estadio: ")
-            estadio = self.estadios_table.find(nombre)
+            nombre = input("Ingrese el nombre del equipo: ")
+            estadio = self.equipos_table.find(nombre)
             if estadio:
                 print(f"Nombre: {estadio[1]}")
                 print(f"Pais: {estadio[2]}")
@@ -213,13 +210,14 @@ class Equipos:
                     break
             seguir = Otros.seguir(self)
             if seguir:
-                self.estadios_table.delete(nombre)
+                self.equipos_table.delete(nombre)
                 print("Datos eliminado correctamente")
             else:
                 break
             seguir = Otros.seguir(self)
 
     def main(self):
+        # menu principal
         while True:
             self.menu()
             match self.opcion:
@@ -227,27 +225,27 @@ class Equipos:
                     # crear estadio
                     Otros.cargando(self)
                     system("clear")
-                    Estadios.create(self)
+                    Equipos.create(self)
                 case "2":
                     # buscar estadio
                     Otros.cargando(self)
                     system("clear")
-                    Estadios.find(self)
+                    Equipos.find(self)
                 case "3":
-                    # motrar listado estadios
+                    # motrar listado Equipos
                     Otros.cargando(self)
                     system("clear")
-                    Estadios.all(self)
+                    Equipos.all(self)
                 case "4":
                     # actualizar datos del estadio
                     Otros.cargando(self)
                     system("clear")
-                    Estadios.update(self)
+                    Equipos.update(self)
                 case "5":
                     # eliminar datos del estadio
                     Otros.cargando(self)
                     system("clear")
-                    Estadios.delete(self)
+                    Equipos.delete(self)
                 case "6":
                     Otros.cargando(self)
                     system("clear")
