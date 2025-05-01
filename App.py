@@ -7,6 +7,7 @@ from database.GolesTable import GolesTable
 
 # LLamada de las clases
 from Estadios import Estadios
+from Equipos import Equipos
 
 # Librerias creada
 from package.Otros import Otros
@@ -20,6 +21,7 @@ class App:
 
     def __init__(self):
         self.Estadios = Estadios()
+        self.Equipos = Equipos()
 
     def creacionDeLaBaseDeDatos(self):
         Otros.cargando(self)
@@ -51,7 +53,8 @@ class App:
         print(anuncio)
         print("0. Crear base de datos")
         print("1. Modulo estadio")
-        print("2. Salir")
+        print("2. Modulo equipos")
+        print("3. Salir")
         self.opcion = input("Elija una opcion: ")
         while self.opcion.isdigit() == False:
             print("ERROR: la variable opcion tiene que ser numerico")
@@ -71,6 +74,11 @@ class App:
                     self.Estadios.main()
                     continue
                 case "2":
+                    Otros.cargando(self)
+                    system("clear")
+                    self.Equipos.main()
+                    continue
+                case "3":
                     # salida del sistema
                     Otros.cargando(self)
                     print("Gracias por utilizar nuestro sistema")

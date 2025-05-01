@@ -9,6 +9,8 @@
         > mostrar todo el listado
         > actualizar
         > Eliminar
+    * Modulo equipo
+        > Egregando datos
 
 # Listado de modelos que falta por hacer
 

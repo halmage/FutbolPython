@@ -21,3 +21,12 @@ class EquiposTable:
         except sqlite3.OperationalError:
             print("La tabla equipos ya existe")
         conexion.close()
+
+    def create(self, datos):
+        conexion = sqlite3.connect("database/futbol.db")
+        conexion.execute(
+            "insert into Equipos (nombre, pais, ciudad, estadio_id) values (?,?,?,?)",
+            (datos["nombre"], datos["pais"], datos["ciudad"], datos["estadio_id"]),
+        )
+        conexion.commit()
+        conexion.close()

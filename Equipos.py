@@ -1,5 +1,7 @@
 # Importando tabla de base de datos
 import database.EquiposTable as EquiposTable
+import database.EstadiosTable as EstadiosTable
+
 
 # Librerias creada
 from package.Otros import Otros
@@ -12,6 +14,7 @@ import time
 class Equipos:
     def __init__(self):
         self.equipos_table = EquiposTable.EquiposTable()
+        self.estadios_table = EstadiosTable.EstadiosTable()
 
     def menu(self):
         anuncio = """
@@ -57,11 +60,37 @@ class Equipos:
             print("ERROR: la variable ciudad tiene que ser caracter")
             ciudad = input("Ingrese ciudad donde reside equipo: ").lower()
 
-        datos = {"nombre": nombre, "pais": pais, "ciudad": ciudad}
+        # Ingreso nombre del estadio
+        validarContinuacion = True
+        while validarContinuacion:
+            estadio = input("Ingrese estadio donde reside equipo: ").lower()
+            while estadio.isalpha() == False:
+                print("ERROR: la variable estadio tiene que ser caracter")
+                estadio = input("Ingrese estadio donde reside equipo: ").lower()
 
-        self.equipos_table.create(datos)
-        print("Equipo creado correctamente")
-        Otros.continuar(self)
+            data_estadio = self.estadios_table.find(estadio)
+
+            if data_estadio:
+                validarContinuacion = False
+            else:
+                print("Estadio no encontrado")
+                validarContinuacion = Otros.validarContinuacion(self)
+                if validarContinuacion:
+                    continue
+                else:
+                    break
+        if data_estadio != None:
+            estadio_id = data_estadio[0]
+            datos = {
+                "nombre": nombre,
+                "pais": pais,
+                "ciudad": ciudad,
+                "estadio_id": estadio_id,
+            }
+            self.equipos_table.create(datos)
+            print("Equipo creado correctamente")
+            Otros.continuar(self)
+            system("clear")
 
     def find(self):
         # buscar equipo
