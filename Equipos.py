@@ -62,7 +62,7 @@ class Equipos:
 
         # Ingreso nombre del estadio
         validarContinuacion = True
-        while validarContinuacion:
+        while validarContinuacion:  # validar si el estadio existe
             estadio = input("Ingrese estadio donde reside equipo: ").lower()
             while estadio.isalpha() == False:
                 print("ERROR: la variable estadio tiene que ser caracter")
@@ -70,16 +70,17 @@ class Equipos:
 
             data_estadio = self.estadios_table.find(estadio)
 
-            if data_estadio:
+            if data_estadio:  # si el estadio existe
                 validarContinuacion = False
-            else:
+            else:  # si el estadio no existe
                 print("Estadio no encontrado")
                 validarContinuacion = Otros.validarContinuacion(self)
-                if validarContinuacion:
+                if validarContinuacion:  # si el usuario quiere continuar
                     continue
-                else:
+                else:  # si el usuario quiere salir
                     break
-        if data_estadio != None:
+        if data_estadio != None:  # si los datos del estadio son validos
+            # Guardar datos en la base de datos equipo
             estadio_id = data_estadio[0]
             datos = {
                 "nombre": nombre,
@@ -132,9 +133,9 @@ class Equipos:
         # opcion de actualizar
         nombre = nombre.upper()
         anuncio = f"""
-        **************************************
-        |ACTUALIZAR DATOS DEL EQUIPO {nombre}|
-        **************************************
+        ****************************************
+        |ACTUALIZANDO DATOS DEL EQUIPO {nombre}|
+        ****************************************
         """
         while True:
             print(anuncio)
@@ -201,12 +202,12 @@ class Equipos:
                     case "3":
                         # actualizar ciudad
                         dato = input(
-                            "Ingrese la nueva ciudad donde recide estadio: "
+                            "Ingrese la nueva ciudad donde recide equipo: "
                         ).lower()
                         while dato.isalpha() == False:
                             print("ERROR: la variable ciudad tiene que ser caracter")
                             dato = input(
-                                "Ingrese la nueva ciudad donde recide estadio: "
+                                "Ingrese la nueva ciudad donde recide equipo: "
                             ).lower()
                         self.equipos_table.update(dato, nombre, opcion)
                         print("Datos actualizado correctamente")

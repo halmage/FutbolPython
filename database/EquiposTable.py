@@ -30,3 +30,43 @@ class EquiposTable:
         )
         conexion.commit()
         conexion.close()
+
+    def find(self, nombre):
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        cursor.execute("select * from Equipos where nombre=?", (nombre,))
+        equipo = cursor.fetchone()
+        conexion.close()
+        return equipo
+
+    def all(self):
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        cursor.execute("select * from Equipos")
+        equipos = cursor.fetchall()
+        conexion.close()
+        return equipos
+
+    def update(self, dato, nombre, opcion):
+        # Actualizar un registro de la tabla 'operaciones'
+        conexion = sqlite3.connect("database/futbol.db")
+        if opcion == "1":
+            conexion.execute(
+                "UPDATE Equipos SET nombre = '{}' WHERE nombre = '{}'".format(
+                    dato, nombre
+                )
+            )
+        elif opcion == "2":
+            conexion.execute(
+                "UPDATE Equipos SET pais = '{}' WHERE nombre = '{}'".format(
+                    dato, nombre
+                )
+            )
+        elif opcion == "3":
+            conexion.execute(
+                "UPDATE Equipos SET ciudad = '{}' WHERE nombre = '{}'".format(
+                    dato, nombre
+                )
+            )
+        conexion.commit()
+        conexion.close()
