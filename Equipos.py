@@ -226,13 +226,13 @@ class Equipos:
         while seguir:
             print(anuncio)
             nombre = input("Ingrese el nombre del equipo: ")
-            estadio = self.equipos_table.find(nombre)
-            if estadio:
-                print(f"Nombre: {estadio[1]}")
-                print(f"Pais: {estadio[2]}")
-                print(f"Ciudad: {estadio[3]}")
+            equipo = self.equipos_table.find(nombre)
+            if equipo:
+                print(f"Nombre: {equipo[1]}")
+                print(f"Pais: {equipo[2]}")
+                print(f"Ciudad: {equipo[3]}")
             else:
-                print("Estadio no encontrado")
+                print("Equipo no encontrado")
                 seguir = Otros.seguir(self)
                 if seguir:
                     continue
