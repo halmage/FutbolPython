@@ -98,17 +98,98 @@ class Jugadores:
             Otros.continuar(self)
             system("clear")
 
+    def find(self):
+        # buscar jugador
+        anuncio = """
+        *********************
+        |BUSQUEDA DE JUGADOR|
+        *********************
+        """
+        print(anuncio)
+        # Ingreso de nombre
+        nombre = input("Ingrese el nombre del jugador: ").lower()
+        while nombre.isalpha() == False:
+            print("ERROR: la variable nombre tiene que ser caracter")
+            nombre = input("Ingrese el nombre del jugador: ").lower()
+        # buscar jugador
+        data_jugador = self.jugadores_table.find(nombre)
+        if data_jugador == []:
+            print("Jugador no encontrado")
+            validarContinuacion = Otros.validarContinuacion(self)
+            if validarContinuacion:
+                # si el usuario quiere continuar
+                self.find()
+            else:
+                # si el usuario quiere salir
+                system("clear")
+                return
+        else:
+            # Mostrar datos del jugador
+            print("**************************")
+            for i in range(len(data_jugador)):
+                print(f"Nombre: {data_jugador[i][1]}")
+                print(f"Pais: {data_jugador[i][2]}")
+                print(f"Ciudad: {data_jugador[i][3]}")
+                print("**************************")
+            Otros.continuar(self)
+
+    def all(self):
+        # listar todos los jugadores
+        anuncio = """
+        *******************************************
+        |LISTADO DE TODOS LOS JUGADORES POR EQUIPO|
+        *******************************************
+        """
+        print(anuncio)
+        # Ingreso de nombre
+        nombre_equipo = input("Ingrese el nombre del equipo: ").lower()
+        while nombre_equipo.isalpha() == False:
+            print("ERROR: la variable equipo tiene que ser caracter")
+            nombre_equipo = input("Ingrese el nombre del equipo: ").lower()
+        # buscar equipo
+        data_jugadores = self.jugadores_table.all(nombre_equipo)
+        if data_jugadores == None:
+            print("Equipo no encontrado")
+            validarContinuacion = Otros.validarContinuacion(self)
+            if validarContinuacion:
+                # si el usuario quiere continuar
+                system("clear")
+                self.all()
+            else:
+                # si el usuario quiere salir
+                system("clear")
+                return
+        else:
+            # Mostrar datos del jugador
+            print("**************************")
+            for i in range(len(data_jugadores)):
+                print(f"Nombre: {data_jugadores[i][1]}")
+                print(f"Pais: {data_jugadores[i][2]}")
+                print(f"Ciudad: {data_jugadores[i][3]}")
+                print("**************************")
+            Otros.continuar(self)
+
     def main(self):
         # menu principal
         while True:
             self.menu()
             match self.opcion:
                 case "1":
-                    # crear estadio
+                    # crear jugador
                     Otros.cargando(self)
                     system("clear")
                     Jugadores.create(self)
                 case "2":
+                    # buscar un jugador
+                    Otros.cargando(self)
+                    system("clear")
+                    Jugadores.find(self)
+                case "3":
+                    # buscar todos los jugadores de un equipo
+                    Otros.cargando(self)
+                    system("clear")
+                    Jugadores.all(self)
+                case "4":
                     # salir
                     Otros.cargando(self)
                     system("clear")

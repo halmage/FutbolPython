@@ -56,7 +56,7 @@ class App:
         print("0. Crear base de datos")
         print("1. Modulo estadio")
         print("2. Modulo equipos")
-        print("3. Modulo juegadores")
+        print("3. Modulo jugadores")
         print("4. Salir")
         self.opcion = input("Elija una opcion: ")
         while self.opcion.isdigit() == False:

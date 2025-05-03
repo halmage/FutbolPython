@@ -1,7 +1,12 @@
 import sqlite3
+import database.EquiposTable as EquiposTable
 
 
 class JugadoresTable:
+
+    def __init__(self):
+        self.equipos_table = EquiposTable.EquiposTable()
+
     def createDatabase(self):
         # Crear la base de datos si no existe y crear la tabla
         conexion = sqlite3.connect("database/futbol.db")
@@ -41,3 +46,34 @@ class JugadoresTable:
         )
         conexion.commit()
         conexion.close()
+
+    def find(self, nombre):
+        # Buscar un jugador por nombre
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        cursor.execute(
+            """
+            select * from Jugadores where nombre = ?""",
+            (nombre,),
+        )
+        Jugador = cursor.fetchall()
+        conexion.close()
+        return Jugador
+
+    def all(self, nombre_equipo):
+        # Obtener todos los jugadores
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        equipo = self.equipos_table.find(nombre_equipo)
+        if equipo == None:
+            conexion.close()
+            return None
+        else:
+            cursor.execute(
+                """
+                select * from Jugadores where equipo_id = ?""",
+                (equipo[0],),
+            )
+            Jugadores = cursor.fetchall()
+            conexion.close()
+            return Jugadores
