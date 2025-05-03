@@ -80,7 +80,7 @@ class Equipos:
                 else:  # si el usuario quiere salir
                     break
         if data_estadio != None:  # si los datos del estadio son validos
-            # Guardar datos en la base de datos equipo
+            # Guardar datos en la tabla equipo
             estadio_id = data_estadio[0]
             datos = {
                 "nombre": nombre,

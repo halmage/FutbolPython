@@ -11,12 +11,9 @@
         > Eliminar
     * Modulo equipo
         > Egregando datos
-
-# Listado de modelos que falta por hacer
-
-    * Modulo equipo
-        > Egregando datos
         > Buscar
         > mostrar todo el listado
         > actualizar
         > Eliminar
+
+# Listado de modelos que falta por hacer

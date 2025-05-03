@@ -22,3 +22,22 @@ class JugadoresTable:
         except sqlite3.OperationalError:
             print("La tabla jugadores ya existe")
         conexion.close()
+
+    def create(self, datos):
+        # Crear un nuevo jugador
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        cursor.execute(
+            """
+            insert into Jugadores (nombre, apellido, pais, ciudad, equipo_id) 
+            values (?, ?, ?, ?, ?)""",
+            (
+                datos["nombre"],
+                datos["apellido"],
+                datos["pais"],
+                datos["ciudad"],
+                datos["equipo_id"],
+            ),
+        )
+        conexion.commit()
+        conexion.close()
