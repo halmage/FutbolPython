@@ -15,6 +15,7 @@ class JugadoresTable:
                 """
                 create table Jugadores (
                                     id integer primary key autoincrement,
+                                    idetificacion text not null,
                                     nombre text not null, 
                                     apellido text not null,                                     
                                     pais text not null,
@@ -34,9 +35,10 @@ class JugadoresTable:
         cursor = conexion.cursor()
         cursor.execute(
             """
-            insert into Jugadores (nombre, apellido, pais, ciudad, equipo_id) 
-            values (?, ?, ?, ?, ?)""",
+            insert into Jugadores (identificacion, nombre, apellido, pais, ciudad, equipo_id) 
+            values (?, ?, ?, ?, ?, ?)""",
             (
+                datos["identificacion"],
                 datos["nombre"],
                 datos["apellido"],
                 datos["pais"],
@@ -47,16 +49,16 @@ class JugadoresTable:
         conexion.commit()
         conexion.close()
 
-    def find(self, nombre):
-        # Buscar un jugador por nombre
+    def find(self, identificacion):
+        # Buscar un jugador por la identificacion
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
         cursor.execute(
             """
-            select * from Jugadores where nombre = ?""",
-            (nombre,),
+            select * from Jugadores where identificacion = ?""",
+            (identificacion,),
         )
-        Jugador = cursor.fetchall()
+        Jugador = cursor.fetchone()
         conexion.close()
         return Jugador
 

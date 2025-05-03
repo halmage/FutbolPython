@@ -11,8 +11,6 @@ class EquiposTable:
                 create table Equipos (
                                     id integer primary key autoincrement,
                                     nombre text not null, 
-                                    pais text not null,
-                                    ciudad text not null,
                                     estadio_id integer not null,
                                     FOREIGN KEY (estadio_id) 
                                     REFERENCES Estadios (id)  
@@ -25,7 +23,7 @@ class EquiposTable:
     def create(self, datos):
         conexion = sqlite3.connect("database/futbol.db")
         conexion.execute(
-            "insert into Equipos (nombre, pais, ciudad, estadio_id) values (?,?,?,?)",
+            "insert into Equipos (nombre, estadio_id) values (?,?,?,?)",
             (datos["nombre"], datos["pais"], datos["ciudad"], datos["estadio_id"]),
         )
         conexion.commit()

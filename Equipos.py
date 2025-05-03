@@ -48,18 +48,6 @@ class Equipos:
             print("ERROR: la variable nombre tiene que ser caracter")
             nombre = input("Ingrese el nombre del equipo: ").lower()
 
-        # Ingreso de pais
-        pais = input("Ingrese pais donde reside equipo: ").lower()
-        while pais.isalpha() == False:
-            print("ERROR: la variable pais tiene que ser caracter")
-            pais = input("Ingrese pais donde reside equipo: ").lower()
-
-        # Ingreso de ciudad
-        ciudad = input("Ingrese ciudad donde reside equipo: ").lower()
-        while ciudad.isalpha() == False:
-            print("ERROR: la variable ciudad tiene que ser caracter")
-            ciudad = input("Ingrese ciudad donde reside equipo: ").lower()
-
         # Ingreso nombre del estadio
         validarContinuacion = True
         while validarContinuacion:  # validar si el estadio existe
@@ -84,8 +72,6 @@ class Equipos:
             estadio_id = data_estadio[0]
             datos = {
                 "nombre": nombre,
-                "pais": pais,
-                "ciudad": ciudad,
                 "estadio_id": estadio_id,
             }
             self.equipos_table.create(datos)
@@ -106,8 +92,6 @@ class Equipos:
             equipo = self.equipos_table.find(nombre)
             if equipo:
                 print(f"Nombre: {equipo[1]}")
-                print(f"Pais: {equipo[2]}")
-                print(f"Ciudad: {equipo[3]}")
             else:
                 print("Equipo no encontrado")
             if Otros.seguir(self) == False:
@@ -124,8 +108,6 @@ class Equipos:
         data = self.equipos_table.all()
         for i in range(len(data)):
             print(f"Nombre: {data[i][1]}")
-            print(f"Pais: {data[i][2]}")
-            print(f"Ciudad: {data[i][3]}")
             print("**************************")
         Otros.continuar(self)
 
@@ -166,11 +148,7 @@ class Equipos:
             print(anuncio)
             nombre = input("Ingrese el nombre del equipo: ")
             equipo = self.equipos_table.find(nombre)
-            if equipo:
-                print(f"Nombre: {equipo[1]}")
-                print(f"Pais: {equipo[2]}")
-                print(f"Ciudad: {equipo[3]}")
-            else:
+            if not equipo:
                 print("equipo no encontrado")
                 seguir = Otros.seguir(self)
                 if seguir:
@@ -179,39 +157,12 @@ class Equipos:
                     break
             seguir = Otros.seguir(self)
             if seguir:
-                opcion = Equipos.opcionUpdate(self, nombre)
-                match opcion:
-                    case "1":
-                        # actualizar nombre
-                        dato = input("Ingrese nuevo nombre del equipo: ").lower()
-                        while dato.isalpha() == False:
-                            print("ERROR: la variable nombre tiene que ser caracter")
-                            dato = input("Ingrese nuevo nombre del equipo: ").lower()
-                        self.equipos_table.update(dato, nombre, opcion)
-                        print("Datos actualizado correctamente")
-                    case "2":
-                        # actualizar pais
-                        dato = input("Ingrese nuevo pais donde recide equipo: ").lower()
-                        while dato.isalpha() == False:
-                            print("ERROR: la variable pais tiene que ser caracter")
-                            dato = input(
-                                "Ingrese nuevo pais donde recide equipo: "
-                            ).lower()
-                        self.equipos_table.update(dato, nombre, opcion)
-                        print("Datos actualizado correctamente")
-                    case "3":
-                        # actualizar ciudad
-                        dato = input(
-                            "Ingrese la nueva ciudad donde recide equipo: "
-                        ).lower()
-                        while dato.isalpha() == False:
-                            print("ERROR: la variable ciudad tiene que ser caracter")
-                            dato = input(
-                                "Ingrese la nueva ciudad donde recide equipo: "
-                            ).lower()
-                        self.equipos_table.update(dato, nombre, opcion)
-                        print("Datos actualizado correctamente")
-
+                dato = input("Ingrese nuevo nombre del equipo: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable nombre tiene que ser caracter")
+                    dato = input("Ingrese nuevo nombre del equipo: ").lower()
+                self.equipos_table.update(dato, nombre, opcion)
+                print("Datos actualizado correctamente")
             else:
                 break
             seguir = Otros.seguir(self)

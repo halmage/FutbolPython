@@ -107,17 +107,18 @@ class Jugadores:
         """
         print(anuncio)
         # Ingreso de nombre
-        nombre = input("Ingrese el nombre del jugador: ").lower()
+        identificacion = input("Ingrese la identificacion del jugador: ").lower()
         while nombre.isalpha() == False:
-            print("ERROR: la variable nombre tiene que ser caracter")
-            nombre = input("Ingrese el nombre del jugador: ").lower()
+            print("ERROR: la variable identificacion tiene que ser caracter")
+            identificacion = input("Ingrese el identificacion del jugador: ").lower()
         # buscar jugador
-        data_jugador = self.jugadores_table.find(nombre)
+        data_jugador = self.jugadores_table.find(identificacion)
         if data_jugador == []:
             print("Jugador no encontrado")
             validarContinuacion = Otros.validarContinuacion(self)
             if validarContinuacion:
                 # si el usuario quiere continuar
+                system("clear")
                 self.find()
             else:
                 # si el usuario quiere salir
@@ -126,12 +127,11 @@ class Jugadores:
         else:
             # Mostrar datos del jugador
             print("**************************")
-            for i in range(len(data_jugador)):
-                print(f"Nombre: {data_jugador[i][1]}")
-                print(f"Pais: {data_jugador[i][2]}")
-                print(f"Ciudad: {data_jugador[i][3]}")
-                print("**************************")
-            Otros.continuar(self)
+            print(f"Identificacion: {data_jugador[1]}")
+            print(f"Nombre: {data_jugador[2]}")
+            print(f"Pais: {data_jugador[3]}")
+            print(f"Ciudad: {data_jugador[4]}")
+            print("**************************")
 
     def all(self):
         # listar todos los jugadores
@@ -164,8 +164,9 @@ class Jugadores:
             print("**************************")
             for i in range(len(data_jugadores)):
                 print(f"Nombre: {data_jugadores[i][1]}")
-                print(f"Pais: {data_jugadores[i][2]}")
-                print(f"Ciudad: {data_jugadores[i][3]}")
+                print(f"Nombre: {data_jugadores[i][2]}")
+                print(f"Pais: {data_jugadores[i][3]}")
+                print(f"Ciudad: {data_jugadores[i][4]}")
                 print("**************************")
             Otros.continuar(self)
 
