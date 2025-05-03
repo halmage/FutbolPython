@@ -15,5 +15,13 @@
         > mostrar todo el listado
         > actualizar
         > Eliminar
+    * Modulo Jugadores
+        > Egregando datos
 
 # Listado de modelos que falta por hacer
+
+    * Modulo Jugadores
+        > Buscar
+        > mostrar todo el listado
+        > actualizar
+        > Eliminar
