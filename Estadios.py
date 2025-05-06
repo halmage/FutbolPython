@@ -35,9 +35,9 @@ class Estadios:
     def create(self):
         # creacion de estadio
         anuncio = """
-        ******************************
-        |INGRESO DE DATOS DEL ESTADIO|
-        ******************************
+        *****************
+        |CREANDO ESTADIO|
+        *****************
         """
         print(anuncio)
         # Ingreso de nombre
@@ -113,11 +113,12 @@ class Estadios:
             print("1. Nombre")
             print("2. Pais")
             print("3. Ciudad")
+            print("4. Salir")
             opcion = input("Elija una opcion: ")
             while opcion.isdigit() == False:
                 print("ERROR: la variable opcion tiene que ser numerico")
                 opcion = input("Ingrese una opcion: ")
-            if opcion < "1" or opcion > "3":
+            if opcion < "1" or opcion > "4":
                 # Mensaje de error por que la opcion no esta en el rango
                 print("ERROR: la variable opcion tiene que ser entre 1 y 3")
                 Otros.continuar(self)
@@ -184,7 +185,9 @@ class Estadios:
                             ).lower()
                         self.estadios_table.update(dato, nombre, opcion)
                         print("Datos actualizado correctamente")
-
+                    case "4":
+                        system("clear")
+                        break
             else:
                 break
             seguir = Otros.seguir(self)

@@ -1,6 +1,9 @@
 import sqlite3
 import database.EquiposTable as EquiposTable
 
+# libreria externa
+from faker import Faker
+
 
 class JugadoresTable:
 
@@ -9,13 +12,15 @@ class JugadoresTable:
 
     def createDatabase(self):
         # Crear la base de datos si no existe y crear la tabla
+        # Configurar Faker (español o inglés)
+        fake = Faker(locale="es_ES")
         conexion = sqlite3.connect("database/futbol.db")
         try:
             conexion.execute(
                 """
                 create table Jugadores (
                                     id integer primary key autoincrement,
-                                    idetificacion text not null,
+                                    identificacion text not null,
                                     nombre text not null, 
                                     apellido text not null,                                     
                                     pais text not null,
@@ -25,8 +30,23 @@ class JugadoresTable:
                                     REFERENCES Equipos (id) 
                                 )"""
             )
+            # Generar e insertar 110 registros falsos
+            for _ in range(10):
+                identificacion = fake.random_int(min=10000000, max=99999999)
+                nombre = fake.first_name().lower()
+                apellido = fake.last_name().lower()
+                pais = fake.country().lower()
+                ciudad = fake.city().lower()
+                equipo_id = fake.random_int(min=1, max=10)
+                conexion.execute(
+                    """
+                        INSERT INTO Jugadores (identificacion, nombre, apellido, pais, ciudad, equipo_id) 
+                        VALUES (?, ?, ?, ?, ?, ?)""",
+                    (identificacion, nombre, apellido, pais, ciudad, equipo_id),
+                )
         except sqlite3.OperationalError:
             print("La tabla jugadores ya existe")
+        conexion.commit()
         conexion.close()
 
     def create(self, datos):

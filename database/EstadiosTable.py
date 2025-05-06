@@ -1,9 +1,15 @@
 import sqlite3
 
+# libreria externa
+from faker import Faker
+
 
 class EstadiosTable:
     def createDatabase(self):
         # Crear la base de datos si no existe y crear la tabla
+        # Configurar Faker (español o inglés)
+        fake = Faker(locale="es_ES")
+
         conexion = sqlite3.connect("database/futbol.db")
         try:
             conexion.execute(
@@ -15,11 +21,38 @@ class EstadiosTable:
                                     ciudad text not null 
                                 )"""
             )
+            # Generar e insertar 10 registros falsos
+            lista_nombres = [
+                "guaqueri",
+                "chaima",
+                "yanomami",
+                "cumanagoto",
+                "caiguire",
+                "petare",
+                "magolen",
+                "petrines",
+                "manchester",
+                "queen",
+            ]
+            for n in range(10):
+                nombre = lista_nombres[n]
+                pais = fake.country().lower()
+                ciudad = fake.city().lower()
+                conexion.execute(
+                    """
+                    INSERT INTO Estadios (nombre, pais, ciudad)
+                    VALUES (?, ?, ?)
+                """,
+                    (nombre, pais, ciudad),
+                )
         except sqlite3.OperationalError:
             print("La tabla estadios ya existe")
+        conexion.commit()
         conexion.close()
 
     def create(self, datos):
+
+        # Configurar Faker (español o inglés)
         conexion = sqlite3.connect("database/futbol.db")
         conexion.execute(
             "insert into Estadios (nombre, pais, ciudad) values (?,?,?)",

@@ -91,7 +91,9 @@ class Equipos:
             nombre = input("Ingrese el nombre del equipo: ").lower()
             equipo = self.equipos_table.find(nombre)
             if equipo:
-                print(f"Nombre: {equipo[1]}")
+                print(f"Nombre: {equipo[0]}")
+                print(f"Pais: {equipo[1]}")
+                print(f"Ciudad: {equipo[2]}")
             else:
                 print("Equipo no encontrado")
             if Otros.seguir(self) == False:
@@ -107,7 +109,9 @@ class Equipos:
         print(anuncio)
         data = self.equipos_table.all()
         for i in range(len(data)):
-            print(f"Nombre: {data[i][1]}")
+            print(f"Nombre: {data[i][0]}")
+            print(f"Pais: {data[i][1]}")
+            print(f"Ciudad: {data[i][2]}")
             print("**************************")
         Otros.continuar(self)
 
@@ -122,13 +126,12 @@ class Equipos:
         while True:
             print(anuncio)
             print("1. Nombre")
-            print("2. Pais")
-            print("3. Ciudad")
+            print("2. Salir")
             opcion = input("Elija una opcion: ")
             while opcion.isdigit() == False:
                 print("ERROR: la variable opcion tiene que ser numerico")
                 opcion = input("Ingrese una opcion: ")
-            if opcion < "1" or opcion > "3":
+            if opcion < "1" or opcion > "2":
                 # Mensaje de error por que la opcion no esta en el rango
                 print("ERROR: la variable opcion tiene que ser entre 1 y 3")
                 Otros.continuar(self)
@@ -155,14 +158,22 @@ class Equipos:
                     continue
                 else:
                     break
+            print("equipo encontrado")
             seguir = Otros.seguir(self)
             if seguir:
-                dato = input("Ingrese nuevo nombre del equipo: ").lower()
-                while dato.isalpha() == False:
-                    print("ERROR: la variable nombre tiene que ser caracter")
-                    dato = input("Ingrese nuevo nombre del equipo: ").lower()
-                self.equipos_table.update(dato, nombre, opcion)
-                print("Datos actualizado correctamente")
+                opcion = Equipos.opcionUpdate(self, nombre)
+                match opcion:
+                    case "1":
+                        # actualizar nombre
+                        dato = input("Ingrese nuevo nombre del equipo: ").lower()
+                        while dato.isalpha() == False:
+                            print("ERROR: la variable nombre tiene que ser caracter")
+                            dato = input("Ingrese nuevo nombre del equipo: ").lower()
+                        self.equipos_table.update(dato, nombre)
+                        print("Datos actualizado correctamente")
+                    case "2":
+                        system("clear")
+                        break
             else:
                 break
             seguir = Otros.seguir(self)
@@ -179,9 +190,9 @@ class Equipos:
             nombre = input("Ingrese el nombre del equipo: ")
             equipo = self.equipos_table.find(nombre)
             if equipo:
-                print(f"Nombre: {equipo[1]}")
-                print(f"Pais: {equipo[2]}")
-                print(f"Ciudad: {equipo[3]}")
+                print(f"Nombre: {equipo[0]}")
+                print(f"Pais: {equipo[1]}")
+                print(f"Ciudad: {equipo[2]}")
             else:
                 print("Equipo no encontrado")
                 seguir = Otros.seguir(self)
