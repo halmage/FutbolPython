@@ -13,7 +13,7 @@ class EquiposTable:
         try:
             conexion.execute(
                 """
-                create table Equipos (
+                CREATE TABLE Equipos (
                                     id integer primary key autoincrement,
                                     nombre text not null, 
                                     estadio_id integer not null,
@@ -52,7 +52,7 @@ class EquiposTable:
     def create(self, datos):
         conexion = sqlite3.connect("database/futbol.db")
         conexion.execute(
-            "insert into Equipos (nombre, estadio_id) values (?,?)",
+            "INSERT INTO Equipos (nombre, estadio_id) values (?,?)",
             (datos["nombre"], datos["estadio_id"]),
         )
         conexion.commit()
@@ -74,8 +74,8 @@ class EquiposTable:
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
         cursor.execute(
-            """select Equipos.nombre, Estadios.pais, Estadios.ciudad from 
-               Equipos inner join Estadios ON Equipos.estadio_id = Estadios.id""",
+            """SELECT Equipos.nombre, Estadios.pais, Estadios.ciudad FROM 
+               Equipos INNER JOIN Estadios ON Equipos.estadio_id = Estadios.id""",
         )
         equipos = cursor.fetchall()
         conexion.close()

@@ -18,7 +18,7 @@ class JugadoresTable:
         try:
             conexion.execute(
                 """
-                create table Jugadores (
+                CREATE TABLE Jugadores (
                                     id integer primary key autoincrement,
                                     identificacion text not null,
                                     nombre text not null, 
@@ -55,8 +55,8 @@ class JugadoresTable:
         cursor = conexion.cursor()
         cursor.execute(
             """
-            insert into Jugadores (identificacion, nombre, apellido, pais, ciudad, equipo_id) 
-            values (?, ?, ?, ?, ?, ?)""",
+            INSERT INTO Jugadores (identificacion, nombre, apellido, pais, ciudad, equipo_id) 
+            VALUES (?, ?, ?, ?, ?, ?)""",
             (
                 datos["identificacion"],
                 datos["nombre"],

@@ -14,7 +14,7 @@ class EstadiosTable:
         try:
             conexion.execute(
                 """
-                create table Estadios (
+                CREATE TABLE Estadios (
                                     id integer primary key autoincrement,
                                     nombre text not null, 
                                     pais text not null,
@@ -55,7 +55,7 @@ class EstadiosTable:
         # Configurar Faker (español o inglés)
         conexion = sqlite3.connect("database/futbol.db")
         conexion.execute(
-            "insert into Estadios (nombre, pais, ciudad) values (?,?,?)",
+            "INSERT INTO Estadios (nombre, pais, ciudad) VALUES (?,?,?)",
             (datos["nombre"], datos["pais"], datos["ciudad"]),
         )
         conexion.commit()
@@ -65,7 +65,7 @@ class EstadiosTable:
         # Buscar un estadio
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
-        cursor.execute("select * from Estadios where nombre = ?", (nombre,))
+        cursor.execute("SELECT * FROM Estadios WHERE nombre = ?", (nombre,))
         estadio = cursor.fetchone()
         conexion.close()
         return estadio
@@ -74,7 +74,7 @@ class EstadiosTable:
         # Listar todos los estadios
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
-        cursor.execute("select * from Estadios")
+        cursor.execute("SELECT * FROM Estadios")
         estadios = cursor.fetchall()
         conexion.close()
         return estadios
