@@ -75,12 +75,20 @@ class JugadoresTable:
         cursor = conexion.cursor()
         cursor.execute(
             """
-            select * from Jugadores where identificacion = ?""",
+            SELECT Jugadores.identificacion, 
+                   Jugadores.nombre,
+                   Jugadores.apellido, 
+                   Jugadores.pais,
+                   Jugadores.ciudad,
+                   Equipos.nombre
+                   FROM Jugadores INNER JOIN Equipos ON 
+                   Jugadores.equipo_id = Equipos.id WHERE 
+                   Jugadores.identificacion=?""",
             (identificacion,),
         )
-        Jugador = cursor.fetchone()
+        jugador = cursor.fetchone()
         conexion.close()
-        return Jugador
+        return jugador
 
     def all(self, nombre_equipo):
         # Obtener todos los jugadores
@@ -93,7 +101,7 @@ class JugadoresTable:
         else:
             cursor.execute(
                 """
-                select * from Jugadores where equipo_id = ?""",
+                SELECT * FROM Jugadores WHERE equipo_id = ?""",
                 (equipo[0],),
             )
             Jugadores = cursor.fetchall()

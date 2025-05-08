@@ -105,33 +105,31 @@ class Jugadores:
         |BUSQUEDA DE JUGADOR|
         *********************
         """
-        print(anuncio)
-        # Ingreso de nombre
-        identificacion = input("Ingrese la identificacion del jugador: ").lower()
-        while nombre.isalpha() == False:
-            print("ERROR: la variable identificacion tiene que ser caracter")
-            identificacion = input("Ingrese el identificacion del jugador: ").lower()
-        # buscar jugador
-        data_jugador = self.jugadores_table.find(identificacion)
-        if data_jugador == []:
-            print("Jugador no encontrado")
-            validarContinuacion = Otros.validarContinuacion(self)
-            if validarContinuacion:
-                # si el usuario quiere continuar
-                system("clear")
-                self.find()
+        while True:
+            print(anuncio)
+            # Ingreso de nombre
+            identificacion = input("Ingrese la identificacion del jugador: ").lower()
+            while identificacion.isalnum() == False:
+                print("ERROR: la variable identificacion tiene que ser caracter")
+                identificacion = input(
+                    "Ingrese el identificacion del jugador: "
+                ).lower()
+            # buscar jugador
+            data_jugador = self.jugadores_table.find(identificacion)
+            if data_jugador:
+                # Mostrar datos del jugador
+                print("**************************")
+                print(f"Identificacion: {data_jugador[0]}")
+                print(f"Nombre: {data_jugador[1]}")
+                print(f"Apellido: {data_jugador[2]}")
+                print(f"Pais: {data_jugador[3]}")
+                print(f"Ciudad: {data_jugador[4]}")
+                print(f"Equipo: {data_jugador[5]}")
+                print("**************************")
             else:
-                # si el usuario quiere salir
-                system("clear")
-                return
-        else:
-            # Mostrar datos del jugador
-            print("**************************")
-            print(f"Identificacion: {data_jugador[1]}")
-            print(f"Nombre: {data_jugador[2]}")
-            print(f"Pais: {data_jugador[3]}")
-            print(f"Ciudad: {data_jugador[4]}")
-            print("**************************")
+                print("Jugador no encontrado")
+            if Otros.seguir(self) == False:
+                break
 
     def all(self):
         # listar todos los jugadores

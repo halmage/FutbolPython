@@ -74,6 +74,9 @@ class Estadios:
         while True:
             print(anuncio)
             nombre = input("Ingrese el nombre del estadio: ").lower()
+            while nombre.isalpha() == False:
+                print("ERROR: la variable nombre tiene que ser caracter")
+                nombre = input("Ingrese el nombre del jugador: ").lower()
             estadio = self.estadios_table.find(nombre)
             if estadio:
                 print(f"Nombre: {estadio[1]}")

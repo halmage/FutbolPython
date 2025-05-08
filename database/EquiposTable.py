@@ -62,8 +62,8 @@ class EquiposTable:
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
         cursor.execute(
-            """select Equipos.nombre, Estadios.pais, Estadios.ciudad from 
-               Equipos inner join Estadios ON Equipos.estadio_id = Estadios.id where Equipos.nombre=?""",
+            """SELECT Equipos.nombre, Estadios.pais, Estadios.ciudad FROM 
+               Equipos INNER JOIN Estadios ON Equipos.estadio_id = Estadios.id WHERE Equipos.nombre=?""",
             (nombre,),
         )
         equipo = cursor.fetchone()
