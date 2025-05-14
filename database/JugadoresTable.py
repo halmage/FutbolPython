@@ -101,9 +101,17 @@ class JugadoresTable:
         else:
             cursor.execute(
                 """
-                SELECT * FROM Jugadores WHERE equipo_id = ?""",
+                SELECT Jugadores.identificacion, 
+                       Jugadores.nombre,
+                       Jugadores.apellido, 
+                       Jugadores.pais,
+                       Jugadores.ciudad,
+                       Equipos.nombre
+                       FROM Jugadores INNER JOIN Equipos ON 
+                       Jugadores.equipo_id = Equipos.id WHERE 
+                       Equipos.nombre=?""",
                 (equipo[0],),
             )
-            Jugadores = cursor.fetchall()
+            jugadores = cursor.fetchall()
             conexion.close()
-            return Jugadores
+            return jugadores
