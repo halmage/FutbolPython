@@ -115,3 +115,46 @@ class JugadoresTable:
             jugadores = cursor.fetchall()
             conexion.close()
             return jugadores
+
+    def update(self, dato, identificacion, opcion):
+        # Actualizar un jugador
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        match opcion:
+            case "1":
+                cursor.execute(
+                    """
+                    UPDATE Jugadores SET identificacion = '{}' WHERE identificacion = '{}'""".format(
+                        dato, identificacion
+                    ),
+                )
+            case "2":
+                cursor.execute(
+                    """
+                    UPDATE Jugadores SET nombre = '{}' WHERE identificacion = '{}'""".format(
+                        dato, identificacion
+                    ),
+                )
+            case "3":
+                cursor.execute(
+                    """
+                    UPDATE Jugadores SET apellido = '{}' WHERE identificacion = '{}'""".format(
+                        dato, identificacion
+                    ),
+                )
+            case "4":
+                cursor.execute(
+                    """
+                    UPDATE Jugadores SET pais = '{}' WHERE identificacion = '{}'""".format(
+                        dato, identificacion
+                    ),
+                )
+            case "5":
+                cursor.execute(
+                    """
+                    UPDATE Jugadores SET ciudad = '{}' WHERE identificacion = '{}'""".format(
+                        dato, identificacion
+                    ),
+                )
+        conexion.commit()
+        conexion.close()
