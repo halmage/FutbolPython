@@ -158,3 +158,16 @@ class JugadoresTable:
                 )
         conexion.commit()
         conexion.close()
+
+    def delete(self, identificacion):
+        # Eliminar un jugador
+        conexion = sqlite3.connect("database/futbol.db")
+        cursor = conexion.cursor()
+        cursor.execute(
+            """
+            DELETE FROM Jugadores WHERE identificacion ='{}'""".format(
+                identificacion
+            ),
+        )
+        conexion.commit()
+        conexion.close()
