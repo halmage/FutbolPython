@@ -62,7 +62,7 @@ class EquiposTable:
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
         cursor.execute(
-            """SELECT Equipos.nombre, Estadios.pais, Estadios.ciudad FROM 
+            """SELECT Equipos.nombre, Estadios.nombre, Estadios.pais, Estadios.ciudad FROM 
                Equipos INNER JOIN Estadios ON Equipos.estadio_id = Estadios.id WHERE Equipos.nombre=?""",
             (nombre,),
         )
@@ -74,7 +74,7 @@ class EquiposTable:
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
         cursor.execute(
-            """SELECT Equipos.nombre, Estadios.pais, Estadios.ciudad FROM 
+            """SELECT Equipos.nombre, Estadios.nombre, Estadios.pais, Estadios.ciudad FROM 
                Equipos INNER JOIN Estadios ON Equipos.estadio_id = Estadios.id""",
         )
         equipos = cursor.fetchall()

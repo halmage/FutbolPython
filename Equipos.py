@@ -24,7 +24,7 @@ class Equipos:
         """
         print(anuncio)
         print("1. Crear equipo")
-        print("2. buscar equipo")
+        print("2. Buscar equipo")
         print("3. Listar equipos")
         print("4. Actualizar equipo")
         print("5. Eliminar equipo")
@@ -49,8 +49,7 @@ class Equipos:
             nombre = input("Ingrese el nombre del equipo: ").lower()
 
         # Ingreso nombre del estadio
-        validarContinuacion = True
-        while validarContinuacion:  # validar si el estadio existe
+        while True:  # validar si el estadio existe
             estadio = input("Ingrese estadio donde reside equipo: ").lower()
             while estadio.isalpha() == False:
                 print("ERROR: la variable estadio tiene que ser caracter")
@@ -59,11 +58,10 @@ class Equipos:
             data_estadio = self.estadios_table.find(estadio)
 
             if data_estadio:  # si el estadio existe
-                validarContinuacion = False
+                break
             else:  # si el estadio no existe
                 print("Estadio no encontrado")
-                validarContinuacion = Otros.validarContinuacion(self)
-                if validarContinuacion:  # si el usuario quiere continuar
+                if Otros.validarContinuacion(self):  # si el usuario quiere continuar
                     continue
                 else:  # si el usuario quiere salir
                     break
@@ -91,9 +89,12 @@ class Equipos:
             nombre = input("Ingrese el nombre del equipo: ").lower()
             equipo = self.equipos_table.find(nombre)
             if equipo:
+                print("**************************")
                 print(f"Nombre: {equipo[0]}")
-                print(f"Pais: {equipo[1]}")
-                print(f"Ciudad: {equipo[2]}")
+                print(f"Estadio: {equipo[1]}")
+                print(f"Pais: {equipo[2]}")
+                print(f"Ciudad: {equipo[3]}")
+                print("**************************")
             else:
                 print("Equipo no encontrado")
             if Otros.seguir(self) == False:
@@ -110,8 +111,9 @@ class Equipos:
         data = self.equipos_table.all()
         for i in range(len(data)):
             print(f"Nombre: {data[i][0]}")
-            print(f"Pais: {data[i][1]}")
-            print(f"Ciudad: {data[i][2]}")
+            print(f"Estadio: {data[i][1]}")
+            print(f"Pais: {data[i][2]}")
+            print(f"Ciudad: {data[i][3]}")
             print("**************************")
         Otros.continuar(self)
 
