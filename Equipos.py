@@ -117,13 +117,12 @@ class Equipos:
             print("**************************")
         Otros.continuar(self)
 
-    def opcionUpdate(self, nombre):
+    def menuUpdate(self, equipo):
         # opcion de actualizar
-        nombre = nombre.upper()
         anuncio = f"""
-        ****************************************
-        |ACTUALIZANDO DATOS DEL EQUIPO {nombre}|
-        ****************************************
+        ********************************{Otros.asteriscos(equipo[0])}
+        |ACTUALIZANDO DATOS DEL EQUIPO {equipo[0].upper()}|
+        ********************************{Otros.asteriscos(equipo[0])}
         """
         while True:
             print(anuncio)
@@ -141,6 +140,22 @@ class Equipos:
             else:
                 return opcion
 
+    def opcionesUpdate(self, opcion, nombre):
+        match opcion:
+            case "1":
+                # actualizar nombre
+                dato = input("Ingrese nuevo nombre del equipo: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable nombre tiene que ser caracter")
+                    dato = input("Ingrese nuevo nombre del equipo: ").lower()
+                self.equipos_table.update(dato, nombre)
+                print("Datos actualizado correctamente")
+            case "2":
+                return 0
+            case _:
+                print("ERROR: la variable opcion tiene que ser entre 1 y 2")
+                Otros.continuar(self)
+
     def update(self):
         # actualizar equipo
         anuncio = """
@@ -148,8 +163,7 @@ class Equipos:
         |ACTUALIZAR DATOS DEL EQUIPO|
         ******************************
         """
-        seguir = True
-        while seguir:
+        while True:
             print(anuncio)
             nombre = input("Ingrese el nombre del equipo: ")
             equipo = self.equipos_table.find(nombre)
@@ -160,25 +174,12 @@ class Equipos:
                     continue
                 else:
                     break
-            print("equipo encontrado")
-            seguir = Otros.seguir(self)
-            if seguir:
-                opcion = Equipos.opcionUpdate(self, nombre)
-                match opcion:
-                    case "1":
-                        # actualizar nombre
-                        dato = input("Ingrese nuevo nombre del equipo: ").lower()
-                        while dato.isalpha() == False:
-                            print("ERROR: la variable nombre tiene que ser caracter")
-                            dato = input("Ingrese nuevo nombre del equipo: ").lower()
-                        self.equipos_table.update(dato, nombre)
-                        print("Datos actualizado correctamente")
-                    case "2":
-                        system("clear")
-                        break
             else:
+                system("clear")
+                opcion = Equipos.menuUpdate(self, equipo)
+                Equipos.opcionesUpdate(self, opcion, nombre)
+            if Otros.seguir(self) == False:
                 break
-            seguir = Otros.seguir(self)
 
     def delete(self):
         anuncio = """
@@ -186,8 +187,7 @@ class Equipos:
         |ELIMINAR DATOS DEL EQUIPO|
         ***************************
         """
-        seguir = True
-        while seguir:
+        while True:
             print(anuncio)
             nombre = input("Ingrese el nombre del equipo: ")
             equipo = self.equipos_table.find(nombre)
@@ -197,18 +197,17 @@ class Equipos:
                 print(f"Ciudad: {equipo[2]}")
             else:
                 print("Equipo no encontrado")
-                seguir = Otros.seguir(self)
-                if seguir:
+                if Otros.seguir(self):
                     continue
                 else:
                     break
-            seguir = Otros.seguir(self)
-            if seguir:
+            if Otros.seguir(self):
                 self.equipos_table.delete(nombre)
                 print("Datos eliminado correctamente")
             else:
                 break
-            seguir = Otros.seguir(self)
+            if Otros.seguir(self) == False:
+                break
 
     def main(self):
         # menu principal

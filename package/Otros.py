@@ -55,3 +55,6 @@ class Otros:
             Otros.cargando(self)
             system("clear")
             return False
+
+    def asteriscos(palabra):
+        return len(palabra) * "*"

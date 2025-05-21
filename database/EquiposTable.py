@@ -82,7 +82,6 @@ class EquiposTable:
         return equipos
 
     def update(self, dato, nombre):
-        print(dato, "--", nombre)
         # Actualizar un registro de la tabla 'operaciones'
         conexion = sqlite3.connect("database/futbol.db")
         conexion.execute(
