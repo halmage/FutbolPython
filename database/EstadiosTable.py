@@ -52,7 +52,7 @@ class EstadiosTable:
 
     def create(self, datos):
 
-        # Configurar Faker (español o inglés)
+        # Crear un estadio
         conexion = sqlite3.connect("database/futbol.db")
         conexion.execute(
             "INSERT INTO Estadios (nombre, pais, ciudad) VALUES (?,?,?)",
@@ -82,24 +82,25 @@ class EstadiosTable:
     def update(self, dato, nombre, opcion):
         # Actualizar un registro de la tabla 'operaciones'
         conexion = sqlite3.connect("database/futbol.db")
-        if opcion == "1":
-            conexion.execute(
-                "UPDATE Estadios SET nombre = '{}' WHERE nombre = '{}'".format(
-                    dato, nombre
+        match opcion:
+            case "1":
+                conexion.execute(
+                    "UPDATE Estadios SET nombre = '{}' WHERE nombre = '{}'".format(
+                        dato, nombre
+                    )
                 )
-            )
-        elif opcion == "2":
-            conexion.execute(
-                "UPDATE Estadios SET pais = '{}' WHERE nombre = '{}'".format(
-                    dato, nombre
+            case "2":
+                conexion.execute(
+                    "UPDATE Estadios SET pais = '{}' WHERE nombre = '{}'".format(
+                        dato, nombre
+                    )
                 )
-            )
-        elif opcion == "3":
-            conexion.execute(
-                "UPDATE Estadios SET ciudad = '{}' WHERE nombre = '{}'".format(
-                    dato, nombre
+            case "3":
+                conexion.execute(
+                    "UPDATE Estadios SET ciudad = '{}' WHERE nombre = '{}'".format(
+                        dato, nombre
+                    )
                 )
-            )
         conexion.commit()
         conexion.close()
 

@@ -22,7 +22,7 @@ class Estadios:
         """
         print(anuncio)
         print("1. Crear estadio")
-        print("2. buscar estadio")
+        print("2. Buscar estadio")
         print("3. Listar estadios")
         print("4. Actualizar estadio")
         print("5. Eliminar estadio")
@@ -67,9 +67,9 @@ class Estadios:
     def find(self):
         # buscar estadio
         anuncio = """
-        ******************************
+        **************************
         |BUSCAR DATOS DEL ESTADIO|
-        ******************************
+        **************************
         """
         while True:
             print(anuncio)
@@ -103,8 +103,8 @@ class Estadios:
             print("**************************")
         Otros.continuar(self)
 
-    def opcionUpdate(self, nombre):
-        # opcion de actualizar
+    def menuUpdate(self, nombre):
+        # menu de actualizar
         nombre = nombre.upper()
         anuncio = f"""
         ***************************************
@@ -129,6 +129,34 @@ class Estadios:
             else:
                 return opcion
 
+    def opcionesUpdate(self, nombre, opcion):
+        match opcion:
+            case "1":
+                # actualizar nombre
+                dato = input("Ingrese nuevo nombre del estadio: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable nombre tiene que ser caracter")
+                    dato = input("Ingrese nuevo nombre del estadio: ").lower()
+                self.estadios_table.update(dato, nombre, opcion)
+            case "2":
+                # actualizar pais
+                dato = input("Ingrese nuevo pais donde recide estadio: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable pais tiene que ser caracter")
+                    dato = input("Ingrese nuevo pais donde recide estadio: ").lower()
+                self.estadios_table.update(dato, nombre, opcion)
+            case "3":
+                # actualizar ciudad
+                dato = input("Ingrese la nueva ciudad donde recide estadio: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable ciudad tiene que ser caracter")
+                    dato = input(
+                        "Ingrese la nueva ciudad donde recide estadio: "
+                    ).lower()
+                self.estadios_table.update(dato, nombre, opcion)
+            case "4":
+                system("clear")
+
     def update(self):
         # actualizar estadio
         anuncio = """
@@ -147,53 +175,18 @@ class Estadios:
                 print(f"Ciudad: {estadio[3]}")
             else:
                 print("Estadio no encontrado")
-                seguir = Otros.seguir(self)
-                if seguir:
+                if Otros.seguir(self):
                     continue
                 else:
                     break
-            seguir = Otros.seguir(self)
-            if seguir:
-                opcion = Estadios.opcionUpdate(self, nombre)
-                match opcion:
-                    case "1":
-                        # actualizar nombre
-                        dato = input("Ingrese nuevo nombre del estadio: ").lower()
-                        while dato.isalpha() == False:
-                            print("ERROR: la variable nombre tiene que ser caracter")
-                            dato = input("Ingrese nuevo nombre del estadio: ").lower()
-                        self.estadios_table.update(dato, nombre, opcion)
-                        print("Datos actualizado correctamente")
-                    case "2":
-                        # actualizar pais
-                        dato = input(
-                            "Ingrese nuevo pais donde recide estadio: "
-                        ).lower()
-                        while dato.isalpha() == False:
-                            print("ERROR: la variable pais tiene que ser caracter")
-                            dato = input(
-                                "Ingrese nuevo pais donde recide estadio: "
-                            ).lower()
-                        self.estadios_table.update(dato, nombre, opcion)
-                        print("Datos actualizado correctamente")
-                    case "3":
-                        # actualizar ciudad
-                        dato = input(
-                            "Ingrese la nueva ciudad donde recide estadio: "
-                        ).lower()
-                        while dato.isalpha() == False:
-                            print("ERROR: la variable ciudad tiene que ser caracter")
-                            dato = input(
-                                "Ingrese la nueva ciudad donde recide estadio: "
-                            ).lower()
-                        self.estadios_table.update(dato, nombre, opcion)
-                        print("Datos actualizado correctamente")
-                    case "4":
-                        system("clear")
-                        break
+            if Otros.seguir(self):
+                opcion = Estadios.menuUpdate(self, nombre)
+                Estadios.opcionesUpdate(self, nombre, opcion)
+                print("Datos actualizado correctamente")
+                if Otros.seguir(self) == False:
+                    break
             else:
                 break
-            seguir = Otros.seguir(self)
 
     def delete(self):
         anuncio = """
@@ -201,8 +194,7 @@ class Estadios:
         |ELIMINAR DATOS DEL ESTADIO|
         ****************************
         """
-        seguir = True
-        while seguir:
+        while True:
             print(anuncio)
             nombre = input("Ingrese el nombre del estadio: ")
             estadio = self.estadios_table.find(nombre)
@@ -212,18 +204,15 @@ class Estadios:
                 print(f"Ciudad: {estadio[3]}")
             else:
                 print("Estadio no encontrado")
-                seguir = Otros.seguir(self)
-                if seguir:
+                if Otros.seguir(self):
                     continue
                 else:
                     break
-            seguir = Otros.seguir(self)
-            if seguir:
+            if Otros.seguir(self):
                 self.estadios_table.delete(nombre)
                 print("Datos eliminado correctamente")
-            else:
-                break
-            seguir = Otros.seguir(self)
+                if Otros.seguir(self) == False:
+                    break
 
     def main(self):
         while True:
