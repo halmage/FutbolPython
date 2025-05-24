@@ -110,7 +110,7 @@ class JugadoresTable:
                        FROM Jugadores INNER JOIN Equipos ON 
                        Jugadores.equipo_id = Equipos.id WHERE 
                        Equipos.nombre=?""",
-                (equipo[0],),
+                (equipo[1],),
             )
             jugadores = cursor.fetchall()
             conexion.close()

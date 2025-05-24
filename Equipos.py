@@ -90,10 +90,10 @@ class Equipos:
             equipo = self.equipos_table.find(nombre)
             if equipo:
                 print("**************************")
-                print(f"Nombre: {equipo[0]}")
-                print(f"Estadio: {equipo[1]}")
-                print(f"Pais: {equipo[2]}")
-                print(f"Ciudad: {equipo[3]}")
+                print(f"Nombre: {equipo[1]}")
+                print(f"Estadio: {equipo[2]}")
+                print(f"Pais: {equipo[3]}")
+                print(f"Ciudad: {equipo[4]}")
                 print("**************************")
             else:
                 print("Equipo no encontrado")
@@ -110,19 +110,19 @@ class Equipos:
         print(anuncio)
         data = self.equipos_table.all()
         for i in range(len(data)):
-            print(f"Nombre: {data[i][0]}")
-            print(f"Estadio: {data[i][1]}")
-            print(f"Pais: {data[i][2]}")
-            print(f"Ciudad: {data[i][3]}")
+            print(f"Nombre: {data[i][1]}")
+            print(f"Estadio: {data[i][2]}")
+            print(f"Pais: {data[i][3]}")
+            print(f"Ciudad: {data[i][4]}")
             print("**************************")
         Otros.continuar(self)
 
-    def menuUpdate(self, equipo):
+    def menuUpdate(self, nombre):
         # opcion de actualizar
         anuncio = f"""
-        ********************************{Otros.asteriscos(equipo[0])}
-        |ACTUALIZANDO DATOS DEL EQUIPO {equipo[0].upper()}|
-        ********************************{Otros.asteriscos(equipo[0])}
+        ********************************{Otros.asteriscos(nombre)}
+        |ACTUALIZANDO DATOS DEL EQUIPO {nombre.upper()}|
+        ********************************{Otros.asteriscos(nombre)}
         """
         while True:
             print(anuncio)
@@ -176,7 +176,7 @@ class Equipos:
                     break
             else:
                 system("clear")
-                opcion = Equipos.menuUpdate(self, equipo)
+                opcion = Equipos.menuUpdate(self, nombre)
                 Equipos.opcionesUpdate(self, opcion, nombre)
             if Otros.seguir(self) == False:
                 break

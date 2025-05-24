@@ -19,9 +19,9 @@ class Jugadores:
 
     def menu(self):
         anuncio = """
-        ****************
+        ******************
         |MODULO JUGADORES|
-        ****************
+        ******************
         """
         print(anuncio)
         print("1. Crear jugador")
@@ -42,61 +42,76 @@ class Jugadores:
         |INGRESO DE DATOS DEL JUGADOR|
         ******************************
         """
-        print(anuncio)
-        # Ingreso de nombre
-        nombre = input("Ingrese el nombre del jugador: ").lower()
-        while nombre.isalpha() == False:
-            print("ERROR: la variable nombre tiene que ser caracter")
+        bandera = True
+        while bandera:
+            print(anuncio)
+            # Ingreso de identificacion
+            identificacion = input(
+                "Ingrese la identificacion (pasaporte/dni) del jugador: "
+            )
+            while identificacion.isdigit() == False:
+                print("ERROR: la variable identificacion tiene que ser numerico")
+                identificacion = input(
+                    "Ingrese la identificacion (pasaporte/dni) del jugador: "
+                )
+            # Ingreso de nombre
             nombre = input("Ingrese el nombre del jugador: ").lower()
-        # Ingreso de apellido
-        apellido = input("Ingrese el apellido del jugador: ").lower()
-        while apellido.isalpha() == False:
-            print("ERROR: la variable apellido tiene que ser caracter")
+            while nombre.isalpha() == False:
+                print("ERROR: la variable nombre tiene que ser caracter")
+                nombre = input("Ingrese el nombre del jugador: ").lower()
+            # Ingreso de apellido
             apellido = input("Ingrese el apellido del jugador: ").lower()
-        # Ingreso de pais
-        pais = input("Ingrese pais donde reside jugador: ").lower()
-        while pais.isalpha() == False:
-            print("ERROR: la variable pais tiene que ser caracter")
+            while apellido.isalpha() == False:
+                print("ERROR: la variable apellido tiene que ser caracter")
+                apellido = input("Ingrese el apellido del jugador: ").lower()
+            # Ingreso de pais
             pais = input("Ingrese pais donde reside jugador: ").lower()
-        # Ingreso de ciudad
-        ciudad = input("Ingrese ciudad donde reside jugador: ").lower()
-        while ciudad.isalpha() == False:
-            print("ERROR: la variable ciudad tiene que ser caracter")
+            while pais.isalpha() == False:
+                print("ERROR: la variable pais tiene que ser caracter")
+                pais = input("Ingrese pais donde reside jugador: ").lower()
+            # Ingreso de ciudad
             ciudad = input("Ingrese ciudad donde reside jugador: ").lower()
-        # Ingreso de equipo
-        validarContinuacion = True
-        while validarContinuacion:  # validar si el estadio existe
-            equipo = input("Ingrese equipo donde reside el jugador: ").lower()
-            while equipo.isalpha() == False:
-                print("ERROR: la variable equipo tiene que ser caracter")
+            while ciudad.isalpha() == False:
+                print("ERROR: la variable ciudad tiene que ser caracter")
+                ciudad = input("Ingrese ciudad donde reside jugador: ").lower()
+            # Ingreso de equipo
+            while True:  # validar si el estadio existe
                 equipo = input("Ingrese equipo donde reside el jugador: ").lower()
+                while equipo.isalpha() == False:
+                    print("ERROR: la variable equipo tiene que ser caracter")
+                    equipo = input("Ingrese equipo donde reside el jugador: ").lower()
 
-            data_equipo = self.equipos_table.find(equipo)
+                # buscar equipo
+                data_equipo = self.equipos_table.find(equipo)
 
-            if data_equipo:  # si el equipo existe
-                validarContinuacion = False
-            else:  # si el equipo no existe
-                print("Equipo no encontrado")
-                validarContinuacion = Otros.validarContinuacion(self)
-                if validarContinuacion:  # si el usuario quiere continuar
-                    continue
-                else:  # si el usuario quiere salir
+                if data_equipo:  # si el equipo existe
                     break
+                else:  # si el equipo no existe
+                    print("Equipo no encontrado")
+                    if Otros.validarContinuacion(
+                        self
+                    ):  # si el usuario quiere continuar
+                        continue
+                    else:  # si el usuario quiere salir
+                        bandera = False
+                        break
 
-        if data_equipo != None:  # si los datos del estadio son validos
-            # Guardar datos en la tabla jugador
-            equipo_id = data_equipo[0]
-            datos = {
-                "nombre": nombre,
-                "apellido": apellido,
-                "pais": pais,
-                "ciudad": ciudad,
-                "equipo_id": equipo_id,
-            }
-            self.jugadores_table.create(datos)
-            print("Jugador creado correctamente")
-            Otros.continuar(self)
-            system("clear")
+            if data_equipo != None:  # si los datos del estadio son validos
+                # Guardar datos en la tabla jugador
+                print(data_equipo)
+                equipo_id = data_equipo[0]
+                datos = {
+                    "identificacion": identificacion,
+                    "nombre": nombre,
+                    "apellido": apellido,
+                    "pais": pais,
+                    "ciudad": ciudad,
+                    "equipo_id": equipo_id,
+                }
+                self.jugadores_table.create(datos)
+                print("Jugador creado correctamente")
+                if Otros.seguir(self) == False:
+                    break
 
     def find(self):
         # buscar jugador
@@ -148,15 +163,10 @@ class Jugadores:
         data_jugadores = self.jugadores_table.all(nombre_equipo)
         if data_jugadores == None:
             print("Equipo no encontrado")
-            validarContinuacion = Otros.validarContinuacion(self)
-            if validarContinuacion:
+            if Otros.validarContinuacion(self) == True:
                 # si el usuario quiere continuar
                 system("clear")
                 self.all()
-            else:
-                # si el usuario quiere salir
-                system("clear")
-                return
         else:
             # Mostrar datos del jugador
             print("**************************")
@@ -166,7 +176,10 @@ class Jugadores:
                 print(f"Pais: {data_jugadores[i][3]}")
                 print(f"Ciudad: {data_jugadores[i][4]}")
                 print("**************************")
-            Otros.continuar(self)
+            if Otros.seguir(self) == True:
+                # si el usuario quiere continuar
+                system("clear")
+                self.all()
 
     def opcionUpdate(self, nombre):
         # opcion de actualizar
@@ -332,7 +345,8 @@ class Jugadores:
                 ).lower()
             # buscar jugador
             data_jugador = self.jugadores_table.find(identificacion)
-            if data_jugador:
+            print(data_jugador)
+            if data_jugador != None:
                 # Mostrar datos del jugador
                 print("**************************")
                 print(f"Identificacion: {data_jugador[0]}")
