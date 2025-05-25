@@ -111,7 +111,8 @@ class Jugadores:
             ciudad = input("Ingrese ciudad donde reside jugador: ").lower()
 
         # Ingreso de equipo
-        while True:  # validar si el estadio existe
+        while True:
+            # validar si el estadio existe
             equipo = input("Ingrese equipo donde reside el jugador: ").lower()
             while equipo.isalpha() == False:
                 print("ERROR: la variable equipo tiene que ser caracter")
@@ -120,7 +121,8 @@ class Jugadores:
             if data_equipo or data_equipo == None:
                 # si el equipo no existe, el usuario no quiere continuar
                 break
-        if data_equipo != None:  # si los datos del estadio son validos
+
+        if data_equipo != None:  # si los datos del equipo son validos
             # Guardar datos en la tabla jugador
             equipo_id = data_equipo[0]
             datos = {
