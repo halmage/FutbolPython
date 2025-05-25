@@ -71,21 +71,25 @@ class Estadios:
         |BUSCAR DATOS DEL ESTADIO|
         **************************
         """
-        while True:
-            print(anuncio)
-            nombre = input("Ingrese el nombre del estadio: ").lower()
-            while nombre.isalpha() == False:
-                print("ERROR: la variable nombre tiene que ser caracter")
-                nombre = input("Ingrese el nombre del jugador: ").lower()
-            estadio = self.estadios_table.find(nombre)
-            if estadio:
-                print(f"Nombre: {estadio[1]}")
-                print(f"Pais: {estadio[2]}")
-                print(f"Ciudad: {estadio[3]}")
-            else:
-                print("Estadio no encontrado")
-            if Otros.seguir(self) == False:
-                break
+        print(anuncio)
+        # Ingreso de nombre
+        nombre = input("Ingrese el nombre del estadio: ").lower()
+        while nombre.isalpha() == False:
+            print("ERROR: la variable nombre tiene que ser caracter")
+            nombre = input("Ingrese el nombre del jugador: ").lower()
+
+        # Buscar estadio en la base de datos
+        estadio = self.estadios_table.find(nombre)
+
+        # Si el estadio existe, mostrar sus datos
+        if estadio:
+            print(f"Nombre: {estadio[1]}")
+            print(f"Pais: {estadio[2]}")
+            print(f"Ciudad: {estadio[3]}")
+        else:
+            print("Estadio no encontrado")
+        if Otros.seguir(self):
+            self.find()
 
     def all(self):
         # listar estadios
@@ -107,27 +111,26 @@ class Estadios:
         # menu de actualizar
         nombre = nombre.upper()
         anuncio = f"""
-        ***************************************
+        *******************************{Otros.asteriscos(nombre)}
         |ACTUALIZAR DATOS DEL ESTADIO {nombre}|
-        ***************************************
+        *******************************{Otros.asteriscos(nombre)}
         """
-        while True:
-            print(anuncio)
-            print("1. Nombre")
-            print("2. Pais")
-            print("3. Ciudad")
-            print("4. Salir")
-            opcion = input("Elija una opcion: ")
-            while opcion.isdigit() == False:
-                print("ERROR: la variable opcion tiene que ser numerico")
-                opcion = input("Ingrese una opcion: ")
-            if opcion < "1" or opcion > "4":
-                # Mensaje de error por que la opcion no esta en el rango
-                print("ERROR: la variable opcion tiene que ser entre 1 y 3")
-                Otros.continuar(self)
-                continue
-            else:
-                return opcion
+        print(anuncio)
+        print("1. Nombre")
+        print("2. Pais")
+        print("3. Ciudad")
+        print("4. Salir")
+        opcion = input("Elija una opcion: ")
+        while opcion.isdigit() == False:
+            print("ERROR: la variable opcion tiene que ser numerico")
+            opcion = input("Ingrese una opcion: ")
+        if opcion not in ["1", "2", "3", "4"]:
+            # Mensaje de error por que la opcion no esta en el rango
+            print("ERROR: la variable opcion tiene que ser entre 1 y 4")
+            Otros.continuar(self)
+            self.menuUpdate(nombre)
+        else:
+            return opcion
 
     def opcionesUpdate(self, nombre, opcion):
         match opcion:
@@ -194,25 +197,22 @@ class Estadios:
         |ELIMINAR DATOS DEL ESTADIO|
         ****************************
         """
-        while True:
-            print(anuncio)
-            nombre = input("Ingrese el nombre del estadio: ")
-            estadio = self.estadios_table.find(nombre)
-            if estadio:
-                print(f"Nombre: {estadio[1]}")
-                print(f"Pais: {estadio[2]}")
-                print(f"Ciudad: {estadio[3]}")
-            else:
-                print("Estadio no encontrado")
-                if Otros.seguir(self):
-                    continue
-                else:
-                    break
+        print(anuncio)
+        nombre = input("Ingrese el nombre del estadio: ")
+        estadio = self.estadios_table.find(nombre)
+        if estadio:
+            print(f"Nombre: {estadio[1]}")
+            print(f"Pais: {estadio[2]}")
+            print(f"Ciudad: {estadio[3]}")
+        else:
+            print("Estadio no encontrado")
             if Otros.seguir(self):
-                self.estadios_table.delete(nombre)
-                print("Datos eliminado correctamente")
-                if Otros.seguir(self) == False:
-                    break
+                self.delete()
+        if Otros.seguir(self):
+            self.estadios_table.delete(nombre)
+            print("Datos eliminado correctamente")
+            if Otros.seguir(self):
+                self.delete()
 
     def main(self):
         while True:

@@ -210,6 +210,8 @@ class Equipos:
         if Otros.seguir(self):
             self.equipos_table.delete(nombre)
             print("Datos eliminado correctamente")
+            if Otros.seguir(self):
+                self.delete()
 
     def main(self):
         # menu principal
