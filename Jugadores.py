@@ -192,7 +192,7 @@ class Jugadores:
         data_jugadores = self.jugadores_table.all(nombre_equipo)
         if data_jugadores == None:
             print("Equipo no encontrado")
-            if Otros.validarContinuacion(self) == True:
+            if Otros.validarContinuacion(self):
                 # si el usuario quiere continuar
                 system("clear")
                 self.all()
@@ -205,7 +205,7 @@ class Jugadores:
                 print(f"Pais: {data_jugadores[i][3]}")
                 print(f"Ciudad: {data_jugadores[i][4]}")
                 print("**************************")
-            if Otros.seguir(self) == True:
+            if Otros.seguir(self):
                 # si el usuario quiere continuar
                 system("clear")
                 self.all()
