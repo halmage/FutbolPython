@@ -94,27 +94,30 @@ class JugadoresTable:
         # Obtener todos los jugadores
         conexion = sqlite3.connect("database/futbol.db")
         cursor = conexion.cursor()
+
+        # Buscar el equipo por nombre
         equipo = self.equipos_table.find(nombre_equipo)
         if equipo == None:
             conexion.close()
             return None
-        else:
-            cursor.execute(
-                """
-                SELECT Jugadores.identificacion, 
-                       Jugadores.nombre,
-                       Jugadores.apellido, 
-                       Jugadores.pais,
-                       Jugadores.ciudad,
-                       Equipos.nombre
-                       FROM Jugadores INNER JOIN Equipos ON 
-                       Jugadores.equipo_id = Equipos.id WHERE 
-                       Equipos.nombre=?""",
-                (equipo[1],),
-            )
-            jugadores = cursor.fetchall()
-            conexion.close()
-            return jugadores
+
+        # Obtener los jugadores del equipo
+        cursor.execute(
+            """
+            SELECT Jugadores.identificacion, 
+                    Jugadores.nombre,
+                    Jugadores.apellido, 
+                    Jugadores.pais,
+                    Jugadores.ciudad,
+                    Equipos.nombre
+                    FROM Jugadores INNER JOIN Equipos ON 
+                    Jugadores.equipo_id = Equipos.id WHERE 
+                    Equipos.nombre=?""",
+            (equipo[1],),
+        )
+        jugadores = cursor.fetchall()
+        conexion.close()
+        return jugadores
 
     def update(self, dato, identificacion, opcion):
         # Actualizar un jugador

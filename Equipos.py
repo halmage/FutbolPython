@@ -59,12 +59,16 @@ class Equipos:
 
             if data_estadio:  # si el estadio existe
                 break
-            else:  # si el estadio no existe
-                print("Estadio no encontrado")
-                if Otros.validarContinuacion(self):  # si el usuario quiere continuar
-                    continue
-                else:  # si el usuario quiere salir
-                    break
+
+            # si el estadio no existe
+            print("Estadio no encontrado")
+            if Otros.validarContinuacion(self):
+                # si el usuario quiere continuar
+                continue
+
+            # si el usuario quiere salir
+            break
+
         if data_estadio != None:  # si los datos del estadio son validos
             # Guardar datos en la tabla equipo
             estadio_id = data_estadio[0]
@@ -84,21 +88,21 @@ class Equipos:
         |BUSCAR DATOS DEL EQUIPO|
         *************************
         """
-        while True:
-            print(anuncio)
-            nombre = input("Ingrese el nombre del equipo: ").lower()
-            equipo = self.equipos_table.find(nombre)
-            if equipo:
-                print("**************************")
-                print(f"Nombre: {equipo[1]}")
-                print(f"Estadio: {equipo[2]}")
-                print(f"Pais: {equipo[3]}")
-                print(f"Ciudad: {equipo[4]}")
-                print("**************************")
-            else:
-                print("Equipo no encontrado")
-            if Otros.seguir(self) == False:
-                break
+        print(anuncio)
+        nombre = input("Ingrese el nombre del equipo: ").lower()
+        equipo = self.equipos_table.find(nombre)
+        if equipo:
+            print("**************************")
+            print(f"Nombre: {equipo[1]}")
+            print(f"Estadio: {equipo[2]}")
+            print(f"Pais: {equipo[3]}")
+            print(f"Ciudad: {equipo[4]}")
+            print("**************************")
+        else:
+            print("Equipo no encontrado")
+        if Otros.seguir(self):
+            # volver a buscar
+            self.find()
 
     def all(self):
         # listar estadios
@@ -110,10 +114,10 @@ class Equipos:
         print(anuncio)
         data = self.equipos_table.all()
         for i in range(len(data)):
-            print(f"Nombre: {data[i][1]}")
-            print(f"Estadio: {data[i][2]}")
-            print(f"Pais: {data[i][3]}")
-            print(f"Ciudad: {data[i][4]}")
+            print(f"Nombre: {data[i][0]}")
+            print(f"Estadio: {data[i][1]}")
+            print(f"Pais: {data[i][2]}")
+            print(f"Ciudad: {data[i][3]}")
             print("**************************")
         Otros.continuar(self)
 
@@ -163,23 +167,24 @@ class Equipos:
         |ACTUALIZAR DATOS DEL EQUIPO|
         ******************************
         """
-        while True:
-            print(anuncio)
-            nombre = input("Ingrese el nombre del equipo: ")
-            equipo = self.equipos_table.find(nombre)
-            if not equipo:
-                print("equipo no encontrado")
-                seguir = Otros.seguir(self)
-                if seguir:
-                    continue
-                else:
-                    break
-            else:
-                system("clear")
-                opcion = Equipos.menuUpdate(self, nombre)
-                Equipos.opcionesUpdate(self, opcion, nombre)
-            if Otros.seguir(self) == False:
-                break
+        print(anuncio)
+        nombre = input("Ingrese el nombre del equipo: ")
+        equipo = self.equipos_table.find(nombre)
+
+        if not equipo:
+            # si el equipo no existe
+            print("equipo no encontrado")
+            if Otros.seguir(self):
+                self.update()
+
+        # si el equipo existe
+        system("clear")
+        opcion = Equipos.menuUpdate(self, nombre)
+        Equipos.opcionesUpdate(self, opcion, nombre)
+
+        if Otros.seguir(self):
+            # si el usuario quiere continuar
+            self.update()
 
     def delete(self):
         anuncio = """
@@ -187,27 +192,24 @@ class Equipos:
         |ELIMINAR DATOS DEL EQUIPO|
         ***************************
         """
-        while True:
-            print(anuncio)
-            nombre = input("Ingrese el nombre del equipo: ")
-            equipo = self.equipos_table.find(nombre)
-            if equipo:
-                print(f"Nombre: {equipo[0]}")
-                print(f"Pais: {equipo[1]}")
-                print(f"Ciudad: {equipo[2]}")
-            else:
-                print("Equipo no encontrado")
-                if Otros.seguir(self):
-                    continue
-                else:
-                    break
+        print(anuncio)
+        nombre = input("Ingrese el nombre del equipo: ")
+        equipo = self.equipos_table.find(nombre)
+        if equipo:
+            # si el equipo existe
+            print(f"Nombre: {equipo[0]}")
+            print(f"Pais: {equipo[1]}")
+            print(f"Ciudad: {equipo[2]}")
+        else:
+            # si el equipo no existe
+            print("Equipo no encontrado")
             if Otros.seguir(self):
-                self.equipos_table.delete(nombre)
-                print("Datos eliminado correctamente")
-            else:
-                break
-            if Otros.seguir(self) == False:
-                break
+                # si el usuario quiere continuar
+                self.delete()
+
+        if Otros.seguir(self):
+            self.equipos_table.delete(nombre)
+            print("Datos eliminado correctamente")
 
     def main(self):
         # menu principal
