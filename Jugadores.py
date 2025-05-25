@@ -59,7 +59,7 @@ class Jugadores:
         else:
             # si el equipo no existe
             print("Equipo no encontrado")
-            if Otros.validarContinuacion(self) == True:
+            if Otros.validarContinuacion(self):
                 # si el usuario quiere continuar
                 return False
             # Retornar None si el equipo no existe
@@ -117,7 +117,9 @@ class Jugadores:
             while equipo.isalpha() == False:
                 print("ERROR: la variable equipo tiene que ser caracter")
                 equipo = input("Ingrese equipo donde reside el jugador: ").lower()
+
             data_equipo = Jugadores.findTeam(self, equipo)  # buscar equipo
+
             if data_equipo or data_equipo == None:
                 # si el equipo no existe, el usuario no quiere continuar
                 break
@@ -344,45 +346,35 @@ class Jugadores:
         |ELIMINAR JUGADOR DE LA BASE DE DATOS|
         **************************************
         """
-        while True:
-            print(anuncio)
-            # Ingreso de identificacion
-            identificacion = input("Ingrese la identificacion del jugador: ").lower()
-            while identificacion.isalnum() == False:
-                print("ERROR: la variable identificacion tiene que ser caracter")
-                identificacion = input(
-                    "Ingrese el identificacion del jugador: "
-                ).lower()
-            # buscar jugador
-            data_jugador = self.jugadores_table.find(identificacion)
-            print(data_jugador)
-            if data_jugador != None:
-                # Mostrar datos del jugador
-                print("**************************")
-                print(f"Identificacion: {data_jugador[0]}")
-                print(f"Nombre: {data_jugador[1]}")
-                print(f"Apellido: {data_jugador[2]}")
-                print(f"Pais: {data_jugador[3]}")
-                print(f"Ciudad: {data_jugador[4]}")
-                print(f"Equipo: {data_jugador[5]}")
-                print("**************************")
-                validarContinuacion = Otros.validarContinuacion(self)
-                if validarContinuacion:
-                    # si el usuario quiere continuar
-                    self.jugadores_table.delete(identificacion)
-                    print("Jugador eliminado correctamente")
-                    if Otros.seguir(self) == False:
-                        break
-                    system("clear")
-                else:
-                    # si el usuario quiere salir
-                    system("clear")
-                    return
-            else:
-                print("Jugador no encontrado")
-                # Mensaje de error por que el estadio no existe
-                if Otros.seguir(self) == False:
-                    break
+        print(anuncio)
+        # Ingreso de identificacion
+        identificacion = input("Ingrese la identificacion del jugador: ").lower()
+        while identificacion.isalnum() == False:
+            print("ERROR: la variable identificacion tiene que ser caracter")
+            identificacion = input("Ingrese el identificacion del jugador: ").lower()
+        # buscar jugador
+        data_jugador = self.jugadores_table.find(identificacion)
+        if data_jugador != None:
+            # Mostrar datos del jugador
+            print("**************************")
+            print(f"Identificacion: {data_jugador[0]}")
+            print(f"Nombre: {data_jugador[1]}")
+            print(f"Apellido: {data_jugador[2]}")
+            print(f"Pais: {data_jugador[3]}")
+            print(f"Ciudad: {data_jugador[4]}")
+            print(f"Equipo: {data_jugador[5]}")
+            print("**************************")
+            if Otros.validarContinuacion(self):
+                # si el usuario quiere continuar
+                self.jugadores_table.delete(identificacion)
+                print("Jugador eliminado correctamente")
+                if Otros.seguir(self):
+                    self.delete()
+        else:
+            print("Jugador no encontrado")
+            # Mensaje de error por que el estadio no existe
+            if Otros.seguir(self):
+                self.delete()
 
     def main(self):
         # menu principal
