@@ -210,7 +210,7 @@ class Jugadores:
                 system("clear")
                 self.all()
 
-    def opcionUpdate(self, nombre):
+    def menuUpdate(self, nombre):
         # opcion de actualizar
         nombre = nombre.upper()
         anuncio = f"""        
@@ -236,6 +236,59 @@ class Jugadores:
             else:
                 return opcion
 
+    def opcionesUpdate(self, opcion, identificacion):
+        match opcion:
+            case "1":
+                # actualizar identificacion
+                dato = input("Ingrese la nueva identificacion del jugador: ").lower()
+                while dato.isalnum() == False:
+                    print("ERROR: la variable identificacion tiene que ser caracter")
+                    dato = input("Ingrese nuevo identificacion del estadio: ").lower()
+                self.jugadores_table.update(dato, identificacion, opcion)
+                print("Datos actualizado correctamente")
+            case "2":
+                # actualizar nombre
+                dato = input("Ingrese nuevo nombre donde recide el jugador: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable nombre tiene que ser caracter")
+                    dato = input(
+                        "Ingrese nuevo nombre donde recide el jugador: "
+                    ).lower()
+                self.jugadores_table.update(dato, identificacion, opcion)
+                print("Datos actualizado correctamente")
+            case "3":
+                # actualizar apellido
+                dato = input("Ingrese nuevo apellido donde recide el jugador: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable apellido tiene que ser caracter")
+                    dato = input(
+                        "Ingrese nuevo apellido donde recide el jugador: "
+                    ).lower()
+                self.jugadores_table.update(dato, identificacion, opcion)
+                print("Datos actualizado correctamente")
+            case "4":
+                # actualizar pais
+                dato = input("Ingrese nuevo pais donde recide el jugador: ").lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable pais tiene que ser caracter")
+                    dato = input("Ingrese nuevo pais donde recide el jugador: ").lower()
+                self.jugadores_table.update(dato, identificacion, opcion)
+                print("Datos actualizado correctamente")
+            case "5":
+                # actualizar ciudad
+                dato = input(
+                    "Ingrese la nueva ciudad donde recide el jugador: "
+                ).lower()
+                while dato.isalpha() == False:
+                    print("ERROR: la variable ciudad tiene que ser caracter")
+                    dato = input(
+                        "Ingrese la nueva ciudad donde recide el jugador: "
+                    ).lower()
+                self.jugadores_table.update(dato, identificacion, opcion)
+                print("Datos actualizado correctamente")
+            case "6":
+                system("clear")
+
     def update(self):
         # actualizar jugador
         anuncio1 = """
@@ -243,118 +296,46 @@ class Jugadores:
         |ACTUALIZAR DATOS DEL JUGADOR|
         ******************************
         """
-        while True:
-            print(anuncio1)
-            # Ingreso de identificacion
-            identificacion = input("Ingrese la identificacion del jugador: ").lower()
-            while identificacion.isalnum() == False:
-                print("ERROR: la variable identificacion tiene que ser caracter")
-                identificacion = input(
-                    "Ingrese el identificacion del jugador: "
-                ).lower()
-            # buscar jugador
-            data_jugador = self.jugadores_table.find(identificacion)
-            if data_jugador:
-                # Mostrar datos del jugador
+        print(anuncio1)
+        # Ingreso de identificacion
+        identificacion = input("Ingrese la identificacion del jugador: ").lower()
+        while identificacion.isalnum() == False:
+            print("ERROR: la variable identificacion tiene que ser caracter")
+            identificacion = input("Ingrese el identificacion del jugador: ").lower()
+        # buscar jugador
+        data_jugador = self.jugadores_table.find(identificacion)
+        if data_jugador:
+            # Mostrar datos del jugador
+            system("clear")
+            anuncio2 = """
+            ******************************************
+            |DATOS DEL JUGADOR QUE QUIERES ACTUALIZAR|
+            ******************************************
+            """
+            print(anuncio2)
+            print("**************************")
+            print(f"Identificacion: {data_jugador[0]}")
+            print(f"Nombre: {data_jugador[1]}")
+            print(f"Apellido: {data_jugador[2]}")
+            print(f"Pais: {data_jugador[3]}")
+            print(f"Ciudad: {data_jugador[4]}")
+            print(f"Equipo: {data_jugador[5]}")
+            print("**************************")
+            validarContinuacion = Otros.validarContinuacion(self)
+            if validarContinuacion:
+                # si el usuario quiere continuar
                 system("clear")
-                anuncio2 = """
-                ******************************************
-                |DATOS DEL JUGADOR QUE QUIERES ACTUALIZAR|
-                ******************************************
-                """
-                print(anuncio2)
-                print("**************************")
-                print(f"Identificacion: {data_jugador[0]}")
-                print(f"Nombre: {data_jugador[1]}")
-                print(f"Apellido: {data_jugador[2]}")
-                print(f"Pais: {data_jugador[3]}")
-                print(f"Ciudad: {data_jugador[4]}")
-                print(f"Equipo: {data_jugador[5]}")
-                print("**************************")
-                validarContinuacion = Otros.validarContinuacion(self)
-                if validarContinuacion:
-                    # si el usuario quiere continuar
-                    system("clear")
-                    opcion = self.opcionUpdate(data_jugador[1])
-                    match opcion:
-                        case "1":
-                            # actualizar identificacion
-                            dato = input(
-                                "Ingrese la nueva identificacion del jugador: "
-                            ).lower()
-                            while dato.isalnum() == False:
-                                print(
-                                    "ERROR: la variable identificacion tiene que ser caracter"
-                                )
-                                dato = input(
-                                    "Ingrese nuevo identificacion del estadio: "
-                                ).lower()
-                            self.jugadores_table.update(dato, identificacion, opcion)
-                            print("Datos actualizado correctamente")
-                        case "2":
-                            # actualizar nombre
-                            dato = input(
-                                "Ingrese nuevo nombre donde recide el jugador: "
-                            ).lower()
-                            while dato.isalpha() == False:
-                                print(
-                                    "ERROR: la variable nombre tiene que ser caracter"
-                                )
-                                dato = input(
-                                    "Ingrese nuevo nombre donde recide el jugador: "
-                                ).lower()
-                            self.jugadores_table.update(dato, identificacion, opcion)
-                            print("Datos actualizado correctamente")
-                        case "3":
-                            # actualizar apellido
-                            dato = input(
-                                "Ingrese nuevo apellido donde recide el jugador: "
-                            ).lower()
-                            while dato.isalpha() == False:
-                                print(
-                                    "ERROR: la variable apellido tiene que ser caracter"
-                                )
-                                dato = input(
-                                    "Ingrese nuevo apellido donde recide el jugador: "
-                                ).lower()
-                            self.jugadores_table.update(dato, identificacion, opcion)
-                            print("Datos actualizado correctamente")
-                        case "4":
-                            # actualizar pais
-                            dato = input(
-                                "Ingrese nuevo pais donde recide el jugador: "
-                            ).lower()
-                            while dato.isalpha() == False:
-                                print("ERROR: la variable pais tiene que ser caracter")
-                                dato = input(
-                                    "Ingrese nuevo pais donde recide el jugador: "
-                                ).lower()
-                            self.jugadores_table.update(dato, identificacion, opcion)
-                            print("Datos actualizado correctamente")
-                        case "5":
-                            # actualizar ciudad
-                            dato = input(
-                                "Ingrese la nueva ciudad donde recide el jugador: "
-                            ).lower()
-                            while dato.isalpha() == False:
-                                print(
-                                    "ERROR: la variable ciudad tiene que ser caracter"
-                                )
-                                dato = input(
-                                    "Ingrese la nueva ciudad donde recide el jugador: "
-                                ).lower()
-                            self.jugadores_table.update(dato, identificacion, opcion)
-                            print("Datos actualizado correctamente")
-                        case "6":
-                            system("clear")
-                else:
-                    # si el usuario quiere salir
-                    system("clear")
-                    return
+                opcion = self.menuUpdate(data_jugador[1])
+                self.opcionesUpdate(opcion, identificacion)
             else:
-                print("Jugador no encontrado")
-            if Otros.seguir(self) == False:
-                break
+                # si el usuario quiere salir
+                system("clear")
+                return
+        else:
+            print("Jugador no encontrado")
+        if Otros.seguir(self):
+            system("clear")
+            self.update()
 
     def delete(self):
         # eliminar jugador
