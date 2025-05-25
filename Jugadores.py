@@ -35,6 +35,36 @@ class Jugadores:
             print("ERROR: la variable opcion tiene que ser numerico")
             self.opcion = input("Ingrese una opcion: ")
 
+    def findPlayer(self, identificacion):
+        # Validar si el jugador ya existe
+        if self.jugadores_table.find(identificacion):
+            print("Jugador ya existe")
+            if Otros.validarContinuacion(self):
+                # si el usuario quiere continuar
+                system("clear")
+                Jugadores.create(self)
+            else:
+                # si el usuario quiere salir
+                system("clear")
+                Jugadores.main(self)
+
+    def findTeam(self, equipo):
+
+        # buscar equipo
+        data_equipo = self.equipos_table.find(equipo)
+
+        if data_equipo:
+            # si el equipo existe
+            return data_equipo
+        else:
+            # si el equipo no existe
+            print("Equipo no encontrado")
+            if Otros.validarContinuacion(self) == True:
+                # si el usuario quiere continuar
+                return False
+            # Retornar None si el equipo no existe
+            return None
+
     def create(self):
         # creacion de jugador
         anuncio = """
@@ -42,76 +72,73 @@ class Jugadores:
         |INGRESO DE DATOS DEL JUGADOR|
         ******************************
         """
-        bandera = True
-        while bandera:
-            print(anuncio)
-            # Ingreso de identificacion
+        print(anuncio)
+        # Ingreso de identificacion
+        identificacion = input(
+            "Ingrese la identificacion (pasaporte/dni) del jugador: "
+        )
+        while identificacion.isdigit() == False:
+            print("ERROR: la variable identificacion tiene que ser numerico")
             identificacion = input(
                 "Ingrese la identificacion (pasaporte/dni) del jugador: "
             )
-            while identificacion.isdigit() == False:
-                print("ERROR: la variable identificacion tiene que ser numerico")
-                identificacion = input(
-                    "Ingrese la identificacion (pasaporte/dni) del jugador: "
-                )
-            # Ingreso de nombre
+
+        # Validar si el jugador ya existe
+        Jugadores.findPlayer(self, identificacion)
+
+        # Ingreso de nombre
+        nombre = input("Ingrese el nombre del jugador: ").lower()
+        while nombre.isalpha() == False:
+            print("ERROR: la variable nombre tiene que ser caracter")
             nombre = input("Ingrese el nombre del jugador: ").lower()
-            while nombre.isalpha() == False:
-                print("ERROR: la variable nombre tiene que ser caracter")
-                nombre = input("Ingrese el nombre del jugador: ").lower()
-            # Ingreso de apellido
+
+        # Ingreso de apellido
+        apellido = input("Ingrese el apellido del jugador: ").lower()
+        while apellido.isalpha() == False:
+            print("ERROR: la variable apellido tiene que ser caracter")
             apellido = input("Ingrese el apellido del jugador: ").lower()
-            while apellido.isalpha() == False:
-                print("ERROR: la variable apellido tiene que ser caracter")
-                apellido = input("Ingrese el apellido del jugador: ").lower()
-            # Ingreso de pais
+
+        # Ingreso de pais
+        pais = input("Ingrese pais donde reside jugador: ").lower()
+        while pais.isalpha() == False:
+            print("ERROR: la variable pais tiene que ser caracter")
             pais = input("Ingrese pais donde reside jugador: ").lower()
-            while pais.isalpha() == False:
-                print("ERROR: la variable pais tiene que ser caracter")
-                pais = input("Ingrese pais donde reside jugador: ").lower()
-            # Ingreso de ciudad
+
+        # Ingreso de ciudad
+        ciudad = input("Ingrese ciudad donde reside jugador: ").lower()
+        while ciudad.isalpha() == False:
+            print("ERROR: la variable ciudad tiene que ser caracter")
             ciudad = input("Ingrese ciudad donde reside jugador: ").lower()
-            while ciudad.isalpha() == False:
-                print("ERROR: la variable ciudad tiene que ser caracter")
-                ciudad = input("Ingrese ciudad donde reside jugador: ").lower()
-            # Ingreso de equipo
-            while True:  # validar si el estadio existe
+
+        # Ingreso de equipo
+        while True:
+            # validar si el estadio existe
+            equipo = input("Ingrese equipo donde reside el jugador: ").lower()
+            while equipo.isalpha() == False:
+                print("ERROR: la variable equipo tiene que ser caracter")
                 equipo = input("Ingrese equipo donde reside el jugador: ").lower()
-                while equipo.isalpha() == False:
-                    print("ERROR: la variable equipo tiene que ser caracter")
-                    equipo = input("Ingrese equipo donde reside el jugador: ").lower()
+            data_equipo = Jugadores.findTeam(self, equipo)  # buscar equipo
+            if data_equipo or data_equipo == None:
+                # si el equipo no existe, el usuario no quiere continuar
+                break
 
-                # buscar equipo
-                data_equipo = self.equipos_table.find(equipo)
-
-                if data_equipo:  # si el equipo existe
-                    break
-                else:  # si el equipo no existe
-                    print("Equipo no encontrado")
-                    if Otros.validarContinuacion(
-                        self
-                    ):  # si el usuario quiere continuar
-                        continue
-                    else:  # si el usuario quiere salir
-                        bandera = False
-                        break
-
-            if data_equipo != None:  # si los datos del estadio son validos
-                # Guardar datos en la tabla jugador
-                print(data_equipo)
-                equipo_id = data_equipo[0]
-                datos = {
-                    "identificacion": identificacion,
-                    "nombre": nombre,
-                    "apellido": apellido,
-                    "pais": pais,
-                    "ciudad": ciudad,
-                    "equipo_id": equipo_id,
-                }
-                self.jugadores_table.create(datos)
-                print("Jugador creado correctamente")
-                if Otros.seguir(self) == False:
-                    break
+        if data_equipo != None:  # si los datos del equipo son validos
+            # Guardar datos en la tabla jugador
+            equipo_id = data_equipo[0]
+            datos = {
+                "identificacion": identificacion,
+                "nombre": nombre,
+                "apellido": apellido,
+                "pais": pais,
+                "ciudad": ciudad,
+                "equipo_id": equipo_id,
+            }
+            self.jugadores_table.create(datos)
+            print("Jugador creado correctamente")
+            if Otros.seguir(self):
+                # si el usuario quiere continuar
+                system("clear")
+                Jugadores.create(self)
 
     def find(self):
         # buscar jugador
@@ -409,3 +436,9 @@ class Jugadores:
                     Otros.cargando(self)
                     system("clear")
                     break
+                case _:
+                    # Mensaje de error por que la opcion no esta en el rango
+                    print("ERROR: la variable opcion tiene que ser entre 1 y 6")
+                    Otros.continuar(self)
+                    system("clear")
+                    continue
